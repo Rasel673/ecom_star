@@ -16,7 +16,8 @@ import {
     Home,
     Percent,
     SlidersHorizontal,
-    Sparkles
+    Sparkles,
+    LogOut
 } from 'lucide-react';
 
 export default function Header() {
@@ -25,9 +26,11 @@ export default function Header() {
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [expandedCategories, setExpandedCategories] = useState({});
     const searchRef = useRef(null);
     const mobileSearchRef = useRef(null);
+    const userDropdownRef = useRef(null);
 
     // Calculate cart count & amount safely whether cart is structured object or array of items
     const cartCount = Array.isArray(cart)
@@ -57,7 +60,7 @@ export default function Header() {
         }
     }, [searchQuery]);
 
-    // Close suggestions when clicking outside
+    // Close suggestions and user menu when clicking outside
     useEffect(() => {
         function handleClickOutside(e) {
             if (
@@ -65,6 +68,9 @@ export default function Header() {
                 mobileSearchRef.current && !mobileSearchRef.current.contains(e.target)
             ) {
                 setShowSuggestions(false);
+            }
+            if (userDropdownRef.current && !userDropdownRef.current.contains(e.target)) {
+                setUserMenuOpen(false);
             }
         }
         document.addEventListener('mousedown', handleClickOutside);
@@ -101,7 +107,7 @@ export default function Header() {
 
     return (
         <>
-            <header className="w-full bg-[#081621] text-white sticky top-0 z-50 shadow-md">
+            <header className="w-full bg-[#081621] text-white sticky top-0 z-50 shadow-md print:hidden">
                 {/* 1. Top Bar */}
                 <div className="border-b border-gray-800 text-[11px] sm:text-xs py-1.5 px-3 sm:px-6 lg:px-8">
                     <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -248,15 +254,91 @@ export default function Header() {
 
                         {/* Account */}
                         {auth?.user ? (
-                            <Link
-                                href={auth.user.role === 'admin' ? route('admin.dashboard') : route('dashboard')}
-                                className="flex items-center gap-1.5 sm:gap-2 text-xs font-semibold bg-gray-800/80 hover:bg-gray-800 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg transition"
-                            >
-                                <User className="w-4 h-4 text-orange-400" />
-                                <span className="hidden sm:inline font-medium text-xs truncate max-w-[80px]">
-                                    {auth.user.name.split(' ')[0]}
-                                </span>
-                            </Link>
+                            <div className="relative" ref={userDropdownRef}>
+                                <button
+                                    type="button"
+                                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                                    className="flex items-center gap-1.5 sm:gap-2 text-xs font-semibold bg-gray-800/80 hover:bg-gray-800 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg transition"
+                                    aria-expanded={userMenuOpen}
+                                    title="Account Menu"
+                                >
+                                    <div className="w-5 h-5 rounded-full bg-[#EF4A23] text-white flex items-center justify-center font-bold text-[10px]">
+                                        {auth.user.name?.charAt(0).toUpperCase() || 'U'}
+                                    </div>
+                                    <span className="hidden sm:inline font-medium text-xs truncate max-w-[85px]">
+                                        {auth.user.name.split(' ')[0]}
+                                    </span>
+                                    <ChevronDown className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${userMenuOpen ? 'rotate-180 text-orange-400' : ''}`} />
+                                </button>
+
+                                {/* Dropdown Menu */}
+                                {userMenuOpen && (
+                                    <div className="absolute right-0 mt-2 w-56 bg-[#0c1a26] border border-gray-700/80 rounded-2xl shadow-2xl py-1.5 z-50 divide-y divide-gray-800/80 text-xs animate-in fade-in zoom-in-95 duration-150">
+                                        <div className="px-3.5 py-2.5 bg-[#081621]/60">
+                                            <p className="font-bold text-white text-xs truncate">{auth.user.name}</p>
+                                            <p className="text-[11px] text-gray-400 truncate mt-0.5">{auth.user.email}</p>
+                                            {auth.user.role === 'admin' ? (
+                                                <span className="inline-block mt-1 text-[9px] bg-red-500/20 text-red-300 border border-red-500/30 px-1.5 py-0.2 rounded font-mono font-bold uppercase">Admin</span>
+                                            ) : (
+                                                <span className="inline-block mt-1 text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-1.5 py-0.2 rounded font-mono font-bold uppercase">Customer</span>
+                                            )}
+                                        </div>
+
+                                        <div className="py-1">
+                                            {auth.user.role === 'admin' ? (
+                                                <Link
+                                                    href={route('admin.dashboard')}
+                                                    onClick={() => setUserMenuOpen(false)}
+                                                    className="flex items-center gap-2.5 px-3.5 py-2 text-gray-200 hover:text-white hover:bg-gray-800 transition"
+                                                >
+                                                    <User className="w-4 h-4 text-orange-400" />
+                                                    <span>Admin Dashboard</span>
+                                                </Link>
+                                            ) : (
+                                                <>
+                                                    <Link
+                                                        href={route('dashboard')}
+                                                        onClick={() => setUserMenuOpen(false)}
+                                                        className="flex items-center gap-2.5 px-3.5 py-2 text-gray-200 hover:text-white hover:bg-gray-800 transition"
+                                                    >
+                                                        <User className="w-4 h-4 text-orange-400" />
+                                                        <span>Customer Account</span>
+                                                    </Link>
+                                                    <Link
+                                                        href="/dashboard?tab=orders"
+                                                        onClick={() => setUserMenuOpen(false)}
+                                                        className="flex items-center gap-2.5 px-3.5 py-2 text-gray-200 hover:text-white hover:bg-gray-800 transition"
+                                                    >
+                                                        <ShoppingCart className="w-4 h-4 text-blue-400" />
+                                                        <span>Order History</span>
+                                                    </Link>
+                                                    <Link
+                                                        href="/dashboard?tab=pc_builds"
+                                                        onClick={() => setUserMenuOpen(false)}
+                                                        className="flex items-center gap-2.5 px-3.5 py-2 text-gray-200 hover:text-white hover:bg-gray-800 transition"
+                                                    >
+                                                        <Cpu className="w-4 h-4 text-purple-400" />
+                                                        <span>Saved PC Builds</span>
+                                                    </Link>
+                                                </>
+                                            )}
+                                        </div>
+
+                                        <div className="py-1">
+                                            <Link
+                                                href={route('logout')}
+                                                method="post"
+                                                as="button"
+                                                onClick={() => setUserMenuOpen(false)}
+                                                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition font-bold"
+                                            >
+                                                <LogOut className="w-4 h-4 text-rose-400" />
+                                                <span>Log Out</span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         ) : (
                             <Link
                                 href={route('login')}
@@ -320,7 +402,7 @@ export default function Header() {
 
             {/* 4. MOBILE SLIDE-OUT OFF-CANVAS DRAWER */}
             {mobileMenuOpen && (
-                <div className="fixed inset-0 z-50 lg:hidden flex">
+                <div className="fixed inset-0 z-50 lg:hidden flex print:hidden">
                     {/* Backdrop */}
                     <div 
                         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
@@ -351,20 +433,32 @@ export default function Header() {
                         {/* User Status Bar */}
                         <div className="p-3 bg-[#112233] border-b border-gray-800 flex items-center justify-between text-xs">
                             {auth?.user ? (
-                                <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded-full bg-[#EF4A23] flex items-center justify-center font-bold text-white text-xs">
-                                        {auth.user.name.charAt(0)}
+                                <div className="flex items-center justify-between w-full gap-2">
+                                    <div className="flex items-center gap-2.5 min-w-0">
+                                        <div className="w-8 h-8 rounded-full bg-[#EF4A23] flex items-center justify-center font-bold text-white text-xs shrink-0">
+                                            {auth.user.name?.charAt(0) || 'U'}
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="font-bold text-white truncate max-w-[120px]">{auth.user.name}</p>
+                                            <Link 
+                                                href={auth.user.role === 'admin' ? route('admin.dashboard') : route('dashboard')}
+                                                onClick={() => setMobileMenuOpen(false)}
+                                                className="text-[10px] text-orange-400 hover:underline block truncate"
+                                            >
+                                                {auth.user.role === 'admin' ? 'Admin Panel' : 'My Account'}
+                                            </Link>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-white truncate max-w-[150px]">{auth.user.name}</p>
-                                        <Link 
-                                            href={auth.user.role === 'admin' ? route('admin.dashboard') : route('dashboard')}
-                                            onClick={() => setMobileMenuOpen(false)}
-                                            className="text-[10px] text-orange-400 hover:underline"
-                                        >
-                                            {auth.user.role === 'admin' ? 'Go to Admin Dashboard' : 'My Account'}
-                                        </Link>
-                                    </div>
+                                    <Link
+                                        href={route('logout')}
+                                        method="post"
+                                        as="button"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="shrink-0 flex items-center gap-1 text-[11px] font-bold text-rose-300 hover:text-white bg-rose-500/20 hover:bg-rose-500/30 px-2.5 py-1.5 rounded-lg border border-rose-500/30 transition"
+                                    >
+                                        <LogOut className="w-3.5 h-3.5 text-rose-400" />
+                                        <span>Logout</span>
+                                    </Link>
                                 </div>
                             ) : (
                                 <div className="flex items-center justify-between w-full">
@@ -457,13 +551,28 @@ export default function Header() {
                                 <PhoneCall className="w-4 h-4" />
                                 <span>Hotline: {settings?.hotline || '16793'}</span>
                             </a>
+
+                            {auth?.user && (
+                                <div className="p-3 border-t border-gray-800/80 mt-2">
+                                    <Link
+                                        href={route('logout')}
+                                        method="post"
+                                        as="button"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 font-bold text-xs border border-rose-500/30 transition"
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        <span>Sign Out</span>
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             )}
 
             {/* 5. STARTECH MOBILE BOTTOM DOCK (Sticky on phones & tablets) */}
-            <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#081621] border-t border-gray-800 lg:hidden shadow-2xl px-2 py-1.5 flex items-center justify-around text-[10px] text-gray-300 select-none">
+            <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#081621] border-t border-gray-800 lg:hidden shadow-2xl px-2 py-1.5 flex items-center justify-around text-[10px] text-gray-300 select-none print:hidden">
                 <Link
                     href="/"
                     className="flex flex-col items-center gap-0.5 hover:text-[#EF4A23] transition py-1 px-2"

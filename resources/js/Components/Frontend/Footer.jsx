@@ -6,7 +6,7 @@ export default function Footer() {
     const { settings } = usePage().props;
 
     return (
-        <footer className="w-full bg-[#081621] text-gray-400 text-xs border-t border-gray-800 pt-12 pb-8 mt-16">
+        <footer className="w-full bg-[#081621] text-gray-400 text-xs border-t border-gray-800 pt-12 pb-8 mt-16 print:hidden">
             {/* Value Props Bar */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 border-b border-gray-800">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-300">
@@ -72,12 +72,11 @@ export default function Footer() {
                         About Star Tech
                     </h3>
                     <ul className="space-y-2">
-                        <li><Link href="/" className="hover:text-white transition">About Us</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Branches & Outlets</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Career Opportunities</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Terms and Conditions</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Privacy Policy</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Star Point Policy</Link></li>
+                        <li><Link href="/page/about-us" className="hover:text-white transition">About Us</Link></li>
+                        <li><Link href="/page/branches-outlets" className="hover:text-white transition">Branches & Outlets</Link></li>
+                        <li><Link href="/page/terms-conditions" className="hover:text-white transition">Terms and Conditions</Link></li>
+                        <li><Link href="/page/privacy-policy" className="hover:text-white transition">Privacy Policy</Link></li>
+                        <li><Link href="/page/emi-calculation" className="hover:text-white transition">Star Point & EMI Policy</Link></li>
                     </ul>
                 </div>
 
@@ -87,12 +86,12 @@ export default function Footer() {
                         Customer Help
                     </h3>
                     <ul className="space-y-2">
-                        <li><Link href="/pc-builder" className="hover:text-white transition">PC Builder Guide</Link></li>
+                        <li><Link href="/page/pc-builder-guide" className="hover:text-white transition">PC Builder Guide</Link></li>
                         <li><Link href="/cart" className="hover:text-white transition">Shopping Cart</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Order Tracking</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">EMI Calculation</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Online Service & Complain</Link></li>
-                        <li><Link href="/" className="hover:text-white transition">Contact Us</Link></li>
+                        <li><Link href="/page/order-tracking" className="hover:text-white transition">Order Tracking</Link></li>
+                        <li><Link href="/page/emi-calculation" className="hover:text-white transition">EMI Calculation</Link></li>
+                        <li><Link href="/page/service-complain" className="hover:text-white transition">Online Service & Complain</Link></li>
+                        <li><Link href="/page/contact-us" className="hover:text-white transition">Contact Us</Link></li>
                     </ul>
                 </div>
 

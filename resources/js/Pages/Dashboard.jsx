@@ -5,7 +5,7 @@ import {
     Package, User, ShoppingBag, Clock, CheckCircle2, ArrowRight, Printer, 
     Cpu, Heart, MessageSquare, Send, Trash2, ExternalLink, Calendar, 
     CreditCard, Truck, ShieldCheck, HelpCircle, AlertCircle, ShoppingCart, 
-    ChevronDown, ChevronUp, Copy, Check
+    ChevronDown, ChevronUp, Copy, Check, LogOut
 } from 'lucide-react';
 
 export default function Dashboard({ 
@@ -123,10 +123,10 @@ export default function Dashboard({
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2.5 w-full sm:w-auto relative z-10">
+                    <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto relative z-10">
                         <Link
                             href="/pc-builder"
-                            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 text-xs bg-white/10 hover:bg-white/20 text-white font-bold py-2.5 px-4 rounded-xl border border-white/10 transition"
+                            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 text-xs bg-white/10 hover:bg-white/20 text-white font-bold py-2.5 px-3.5 rounded-xl border border-white/10 transition"
                         >
                             <Cpu className="w-3.5 h-3.5 text-[#EF4A23]" />
                             <span>PC Builder</span>
@@ -134,11 +134,21 @@ export default function Dashboard({
                         {auth.user?.role === 'admin' && (
                             <Link
                                 href={route('admin.dashboard')}
-                                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-[#EF4A23] hover:bg-[#d63c17] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition shadow-md"
+                                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-[#EF4A23] hover:bg-[#d63c17] text-white text-xs font-bold py-2.5 px-3.5 rounded-xl transition shadow-md"
                             >
                                 <span>Admin Panel →</span>
                             </Link>
                         )}
+                        <Link
+                            href={route('logout')}
+                            method="post"
+                            as="button"
+                            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 text-xs bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 hover:text-white font-bold py-2.5 px-3.5 rounded-xl border border-rose-500/30 transition shadow-sm"
+                            title="Sign out of your Star Tech account"
+                        >
+                            <LogOut className="w-3.5 h-3.5" />
+                            <span>Log Out</span>
+                        </Link>
                     </div>
 
                     {/* Background decorative glow */}
@@ -819,13 +829,60 @@ export default function Dashboard({
                                 <p className="font-bold text-gray-900 text-sm">{auth.user?.address || 'Not provided'}</p>
                             </div>
                         </div>
+
+                        {/* Account Session & Logout */}
+                        <div className="pt-3 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-rose-50/60 p-4 rounded-2xl border border-rose-100 mt-4">
+                            <div>
+                                <h3 className="text-xs font-bold text-rose-900 flex items-center gap-1.5">
+                                    <LogOut className="w-4 h-4 text-rose-600" />
+                                    <span>Account Session & Logout</span>
+                                </h3>
+                                <p className="text-[11px] text-rose-700/80 mt-0.5">
+                                    Safely end your session on this device. You will need to log back in next time.
+                                </p>
+                            </div>
+                            <Link
+                                href={route('logout')}
+                                method="post"
+                                as="button"
+                                className="shrink-0 inline-flex items-center justify-center gap-1.5 text-xs bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded-xl transition shadow-sm"
+                            >
+                                <LogOut className="w-3.5 h-3.5" />
+                                <span>Log Out of Account</span>
+                            </Link>
+                        </div>
                     </div>
                 )}
             </div>
 
             {/* PRINTABLE INVOICE VIEW (Active during window.print()) */}
             {selectedOrderForPrint && (
-                <div className="hidden print:block text-black bg-white p-8 font-sans text-xs">
+                <div className="hidden print:block text-black bg-white p-6 sm:p-8 font-sans text-xs w-full max-w-full m-0">
+                    <style dangerouslySetInnerHTML={{
+                        __html: `
+                            @media print {
+                                header, nav, footer, aside, .print\\:hidden, #app > div > div.print\\:hidden {
+                                    display: none !important;
+                                    visibility: hidden !important;
+                                    height: 0 !important;
+                                    opacity: 0 !important;
+                                    pointer-events: none !important;
+                                }
+                                body, html {
+                                    background: white !important;
+                                    color: black !important;
+                                    margin: 0 !important;
+                                    padding: 0 !important;
+                                }
+                                main {
+                                    padding: 0 !important;
+                                    margin: 0 !important;
+                                    max-width: 100% !important;
+                                    width: 100% !important;
+                                }
+                            }
+                        `
+                    }} />
                     <div className="flex justify-between items-start border-b-2 border-black pb-4 mb-4">
                         <div>
                             <h1 className="text-xl font-black text-[#EF4A23]">STAR TECH & ENGINEERING LTD</h1>

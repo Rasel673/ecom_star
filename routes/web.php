@@ -14,7 +14,9 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\BannerController as AdminBannerController;
 use App\Http\Controllers\Frontend\CustomerDashboardController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Admin\SupportController;
+use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +54,13 @@ Route::get('/pc-builder/choose/{componentSlug}', [PcBuilderController::class, 's
 
 // Pre-Order endpoint
 Route::post('/pre-order', [CustomerDashboardController::class, 'storePreOrder'])->name('preorder.store');
+
+// Dynamic CMS Pages & Interactive Features
+Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
+Route::post('/page/inquiry', [PageController::class, 'submitInquiry'])->name('page.inquiry');
+Route::get('/order-tracking', fn() => redirect()->route('page.show', 'order-tracking'));
+Route::get('/emi-calculation', fn() => redirect()->route('page.show', 'emi-calculation'));
+Route::get('/contact-us', fn() => redirect()->route('page.show', 'contact-us'));
 
 // Customer Auth & Features
 Route::middleware(['auth'])->group(function () {
@@ -103,6 +112,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Pre-Orders Management
     Route::get('/pre-orders', [SupportController::class, 'preOrdersIndex'])->name('preorders.index');
     Route::patch('/pre-orders/{preOrder}', [SupportController::class, 'updatePreOrderStatus'])->name('preorders.status');
+
+    // Dynamic Pages CMS CRUD
+    Route::resource('pages', AdminPageController::class);
+    Route::patch('/pages/{page}/toggle-status', [AdminPageController::class, 'toggleStatus'])->name('pages.toggle-status');
 });
 
 require __DIR__.'/auth.php';

@@ -57,14 +57,18 @@ export default function FrontendLayout({ children, title, description, image }) 
                 </div>
             )}
 
-            <Header />
-            <Navbar />
+            <div className="print:hidden">
+                <Header />
+                <Navbar />
+            </div>
 
-            <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 pb-20 lg:pb-8">
+            <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 pb-20 lg:pb-8 print:p-0 print:m-0 print:max-w-none print:w-full">
                 {children}
             </main>
 
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 }

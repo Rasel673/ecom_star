@@ -15,7 +15,8 @@ import {
     AlertCircle,
     User,
     MessageSquare,
-    Clock
+    Clock,
+    FileText
 } from 'lucide-react';
 
 export default function AdminLayout({ children, title }) {
@@ -48,6 +49,7 @@ export default function AdminLayout({ children, title }) {
         { label: 'Pre-Orders', href: route('admin.preorders.index'), icon: Clock, routeName: 'admin.preorders.*' },
         { label: 'Customer Messages', href: route('admin.messages.index'), icon: MessageSquare, routeName: 'admin.messages.*' },
         { label: 'Banners & Sliders', href: route('admin.banners.index'), icon: Image, routeName: 'admin.banners.*' },
+        { label: 'Pages & CMS', href: route('admin.pages.index'), icon: FileText, routeName: 'admin.pages.*' },
     ];
 
     return (

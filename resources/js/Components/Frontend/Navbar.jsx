@@ -9,7 +9,7 @@ export default function Navbar() {
     if (!categoriesNav || categoriesNav.length === 0) return null;
 
     return (
-        <nav className="w-full bg-[#081621] border-t border-gray-800 text-white relative z-40 hidden lg:block">
+        <nav className="w-full bg-[#081621] border-t border-gray-800 text-white relative z-40 hidden lg:block print:hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ul className="flex items-center justify-between text-xs font-semibold">
                     {categoriesNav.map((cat) => {
