@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link, router } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Search, Eye, ShieldCheck, ShieldAlert, ShieldX, Truck, Package } from 'lucide-react';
 
 export default function Index({ orders, filters = {} }) {
+    const { settings } = usePage().props;
+    const siteName = settings?.site_name || 'Tech Shoppers';
     const [search, setSearch] = useState(filters.search || '');
     const [status, setStatus] = useState(filters.status || '');
     const [fraudStatus, setFraudStatus] = useState(filters.fraud_status || '');
@@ -104,7 +106,7 @@ export default function Index({ orders, filters = {} }) {
                         <option value="redx">RedX Logistics</option>
                         <option value="paperfly">Paperfly</option>
                         <option value="sundarban">Sundarban Courier</option>
-                        <option value="startech_rider">Star Tech Rider</option>
+                        <option value="startech_rider">{siteName} Rider</option>
                     </select>
 
                     {/* Search Field */}

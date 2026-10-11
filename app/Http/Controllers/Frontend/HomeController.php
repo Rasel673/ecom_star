@@ -48,8 +48,8 @@ class HomeController extends Controller
             'latestProducts' => $latestProducts,
             'brands' => $brands,
             'seo' => [
-                'title' => 'Star Tech & Engineering Ltd | Leading Computer, Laptop & Component Shop in Bangladesh',
-                'description' => 'Buy Desktop PC, Laptop, Gaming Component, Monitor, Graphics Card, Processor at best price in Bangladesh from Star Tech.',
+                'title' => \App\Models\Setting::get('site_name', 'Tech Shoppers') . ' | ' . \App\Models\Setting::get('site_tagline', 'Leading Computer, Laptop & Component Shop in Bangladesh'),
+                'description' => 'Buy Desktop PC, Laptop, Gaming Component, Monitor, Graphics Card, Processor at best price in Bangladesh from ' . \App\Models\Setting::get('site_name', 'Tech Shoppers') . '.',
             ],
         ]);
     }

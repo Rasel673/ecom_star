@@ -207,7 +207,7 @@ export default function Cart({ cartItems, cart = [], subtotal = 0, discount = 0,
                                 <form onSubmit={handleApplyCoupon} className="flex items-center gap-2 w-full sm:w-auto">
                                     <input
                                         type="text"
-                                        placeholder="STARTECH1000"
+                                        placeholder="TECH1000"
                                         value={couponCode}
                                         onChange={(e) => setCouponCode(e.target.value)}
                                         className="text-xs uppercase p-2 border border-gray-300 rounded-lg focus:border-[#EF4A23] flex-1 sm:w-36"

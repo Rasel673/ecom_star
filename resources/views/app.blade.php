@@ -4,7 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        @php
+            $siteName = \App\Models\Setting::get('site_name', config('app.name', 'Tech Shoppers'));
+            $siteFavicon = \App\Models\Setting::get('site_favicon');
+        @endphp
+
+        <title inertia>{{ $siteName }}</title>
+
+        @if($siteFavicon)
+        <link rel="icon" href="{{ $siteFavicon }}">
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

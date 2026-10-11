@@ -31,8 +31,8 @@ class PcBuilderController extends Controller
         return Inertia::render('Frontend/PcBuilder', [
             'components' => $components,
             'seo' => [
-                'title' => 'PC Builder - Build Your Own Custom Computer | Star Tech',
-                'description' => 'Star Tech custom PC Builder lets you choose CPU, GPU, Motherboard, RAM, SSD and calculate price with ease.',
+                'title' => 'PC Builder - Build Your Own Custom Computer | ' . \App\Models\Setting::get('site_name', 'Tech Shoppers'),
+                'description' => \App\Models\Setting::get('site_name', 'Tech Shoppers') . ' custom PC Builder lets you choose CPU, GPU, Motherboard, RAM, SSD and calculate price with ease.',
             ],
         ]);
     }

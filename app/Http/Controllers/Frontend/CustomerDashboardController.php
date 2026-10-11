@@ -76,7 +76,7 @@ class CustomerDashboardController extends Controller
             $membershipTier = 'Silver Member';
             $tierBadgeColor = 'from-slate-400 to-slate-600';
         } else {
-            $membershipTier = 'StarTech Member';
+            $membershipTier = \App\Models\Setting::get('site_name', 'Tech Shoppers') . ' Member';
             $tierBadgeColor = 'from-orange-500 to-red-600';
         }
 
@@ -193,7 +193,8 @@ class CustomerDashboardController extends Controller
             'status' => 'open',
         ]);
 
-        return back()->with('success', 'Your message has been sent to StarTech Admin. We will reply shortly!');
+        $siteName = \App\Models\Setting::get('site_name', 'Tech Shoppers');
+        return back()->with('success', "Your message has been sent to {$siteName} Support. We will reply shortly!");
     }
 
     /**

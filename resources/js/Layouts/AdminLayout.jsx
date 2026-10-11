@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { 
     LayoutDashboard, 
     FolderTree, 
@@ -16,11 +16,12 @@ import {
     User,
     MessageSquare,
     Clock,
-    FileText
+    FileText,
+    Settings
 } from 'lucide-react';
 
 export default function AdminLayout({ children, title }) {
-    const { auth, flash } = usePage().props;
+    const { auth, flash, settings } = usePage().props;
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertType, setAlertType] = useState(null);
@@ -50,10 +51,18 @@ export default function AdminLayout({ children, title }) {
         { label: 'Customer Messages', href: route('admin.messages.index'), icon: MessageSquare, routeName: 'admin.messages.*' },
         { label: 'Banners & Sliders', href: route('admin.banners.index'), icon: Image, routeName: 'admin.banners.*' },
         { label: 'Pages & CMS', href: route('admin.pages.index'), icon: FileText, routeName: 'admin.pages.*' },
+        { label: 'Site Settings', href: route('admin.settings.index'), icon: Settings, routeName: 'admin.settings.*' },
     ];
+
+    const siteName = settings?.site_name || 'Tech Shoppers';
 
     return (
         <div className="min-h-screen bg-[#F8FAFC] flex text-[#1E293B]">
+            <Head>
+                <title>{title ? `${title} | ${siteName} Admin` : `${siteName} Admin Control Panel`}</title>
+                {settings?.site_favicon && <link rel="icon" href={settings.site_favicon} />}
+            </Head>
+
             {/* Flash notification */}
             {alertMessage && (
                 <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5">
@@ -76,10 +85,45 @@ export default function AdminLayout({ children, title }) {
                 <div>
                     {/* Brand header */}
                     <div className="h-16 flex items-center justify-between px-6 border-b border-gray-800">
-                        <Link href={route('admin.dashboard')} className="flex items-center gap-2">
-                            <span className="text-xl font-black tracking-tight text-white">STAR</span>
-                            <span className="text-xl font-black tracking-tight text-[#EF4A23]">TECH</span>
-                            <span className="text-[10px] bg-orange-950 text-orange-400 font-bold px-1.5 py-0.5 rounded border border-orange-800">
+                        <Link href={route('admin.dashboard')} className="flex items-center gap-2 max-w-[190px]">
+                            {settings?.site_logo ? (
+                                <img 
+                                    src={settings.site_logo} 
+                                    alt={siteName} 
+                                    className="max-h-8 max-w-[120px] object-contain" 
+                                />
+                            ) : (
+                                <div className="flex items-center gap-1.5 truncate">
+                                    {siteName.includes(' ') ? (
+                                        <>
+                                            <span className="text-lg font-black tracking-tight text-white truncate">
+                                                {siteName.substring(0, siteName.lastIndexOf(' '))}
+                                            </span>
+                                            <span 
+                                                className="text-lg font-black tracking-tight truncate" 
+                                                style={{ color: settings?.primary_color || '#EF4A23' }}
+                                            >
+                                                {siteName.substring(siteName.lastIndexOf(' ') + 1)}
+                                            </span>
+                                        </>
+                                    ) : (
+                                        <span 
+                                            className="text-lg font-black tracking-tight truncate"
+                                            style={{ color: settings?.primary_color || '#EF4A23' }}
+                                        >
+                                            {siteName}
+                                        </span>
+                                    )}
+                                </div>
+                            )}
+                            <span 
+                                className="text-[9px] font-bold px-1.5 py-0.5 rounded border shrink-0"
+                                style={{ 
+                                    backgroundColor: `${settings?.primary_color || '#EF4A23'}25`, 
+                                    borderColor: `${settings?.primary_color || '#EF4A23'}60`,
+                                    color: settings?.primary_color || '#EF4A23'
+                                }}
+                            >
                                 ADMIN
                             </span>
                         </Link>
@@ -100,9 +144,10 @@ export default function AdminLayout({ children, title }) {
                                 <Link
                                     key={idx}
                                     href={item.href}
+                                    style={isActive ? { backgroundColor: settings?.primary_color || '#EF4A23' } : {}}
                                     className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition ${
                                         isActive
-                                            ? 'bg-[#EF4A23] text-white shadow-md'
+                                            ? 'text-white shadow-md'
                                             : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
                                     }`}
                                 >
@@ -151,12 +196,18 @@ export default function AdminLayout({ children, title }) {
                         >
                             <Menu className="w-5 h-5" />
                         </button>
-                        <h2 className="text-base font-bold text-gray-900">{title || 'Admin Control Panel'}</h2>
+                        <h2 className="text-base font-bold text-gray-900">{title || `${siteName} Admin Panel`}</h2>
                     </div>
 
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2 text-xs">
-                            <div className="w-8 h-8 rounded-full bg-orange-100 text-[#EF4A23] font-black flex items-center justify-center">
+                            <div 
+                                className="w-8 h-8 rounded-full font-black flex items-center justify-center"
+                                style={{ 
+                                    backgroundColor: `${settings?.primary_color || '#EF4A23'}18`,
+                                    color: settings?.primary_color || '#EF4A23'
+                                }}
+                            >
                                 {auth.user?.name?.charAt(0) || 'A'}
                             </div>
                             <div className="hidden sm:block text-left">

@@ -26,7 +26,7 @@ export default function HeroSlider({ banners = [] }) {
             <Link href={banner.link || '#'} className="block w-full h-full relative">
                 <img
                     src={banner.image}
-                    alt={banner.title || 'Star Tech Promo'}
+                    alt={banner.title || 'Tech Shoppers Promo'}
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8">

@@ -42,18 +42,23 @@ class DatabaseSeeder extends Seeder
 
         // 2. Settings
         $settings = [
-            'site_name' => 'Star Tech & Engineering Ltd',
+            'site_name' => 'Tech Shoppers',
             'site_tagline' => 'Leading Computer, Laptop & Component Shop in Bangladesh',
             'hotline' => '16793',
             'phone' => '09678002003',
-            'email' => 'info@startech.com.bd',
+            'whatsapp' => '+8801700000000',
+            'email' => 'info@techshoppers.com',
             'address' => '28 Kazi Nazrul Islam Avenue, Banglamotor, Dhaka 1000',
             'currency' => '৳',
+            'primary_color' => '#EF4A23',
+            'header_bg_color' => '#081621',
+            'footer_bg_color' => '#081621',
+            'working_hours' => '10:00 AM - 7:00 PM',
             'delivery_charge_inside' => '60',
             'delivery_charge_outside' => '120',
         ];
         foreach ($settings as $key => $val) {
-            Setting::updateOrCreate(['key' => $key], ['value' => $val]);
+            Setting::firstOrCreate(['key' => $key], ['value' => $val]);
         }
 
         // 3. Brands
@@ -551,7 +556,7 @@ class DatabaseSeeder extends Seeder
                     'Storage' => '512GB M.2 NVMe SSD',
                     'PSU' => '550W 80 Plus Bronze',
                 ],
-                'description' => 'Complete ready-to-game Desktop PC engineered by Star Tech experts. Delivers 60+ FPS in GTA V, Valorant, CS2, Fortnite, and smooth creative workflows.',
+                'description' => 'Complete ready-to-game Desktop PC engineered by Tech Shoppers experts. Delivers 60+ FPS in GTA V, Valorant, CS2, Fortnite, and smooth creative workflows.',
             ],
             [
                 'name' => 'Samsung 980 500GB PCIe 3.0 M.2 NVMe SSD',

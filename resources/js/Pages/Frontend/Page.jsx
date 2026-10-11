@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link, router, useForm } from '@inertiajs/react';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 import { 
     ChevronRight, 
@@ -24,6 +24,9 @@ import {
 } from 'lucide-react';
 
 export default function Page({ page, trackingResult = null, searchQuery = {}, seo = {} }) {
+    const { settings } = usePage().props;
+    const siteName = settings?.site_name || 'Tech Shoppers';
+
     // -------------------------------------------------------------
     // EMI Calculator State & Calculations
     // -------------------------------------------------------------
@@ -94,7 +97,7 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                 <div className="bg-gradient-to-r from-[#081621] via-[#112538] to-[#081621] text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-gray-800 relative overflow-hidden">
                     <div className="relative z-10 max-w-2xl">
                         <span className="text-[11px] font-bold text-orange-400 bg-orange-400/10 border border-orange-400/20 px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3">
-                            Star Tech Official Portal
+                            {siteName} Official Portal
                         </span>
                         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-white">
                             {page.title}

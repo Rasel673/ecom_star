@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 import HeroSlider from '@/Components/Frontend/HeroSlider';
 import ProductCard from '@/Components/Frontend/ProductCard';
@@ -39,6 +39,8 @@ export default function Home({
     brands = [],
     seo = {}
 }) {
+    const { settings } = usePage().props;
+
     return (
         <FrontendLayout title={seo.title} description={seo.description}>
             {/* 1. Hero & Side Promo Banners */}
@@ -202,16 +204,13 @@ export default function Home({
                 </div>
             </div>
 
-            {/* 7. StarTech SEO Bottom Info Block */}
+            {/* 7. Store SEO Bottom Info Block */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 text-xs text-gray-600 space-y-4">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">
-                    Leading Computer, Laptop & Component Shop in Bangladesh - Star Tech & Engineering Ltd
+                    {settings?.site_tagline || 'Leading Computer, Laptop & Component Shop in Bangladesh'} - {settings?.site_name || 'Tech Shoppers'}
                 </h3>
                 <p>
-                    Star Tech is Bangladesh's largest retail and online shop for computers, laptops, PC gaming components, gadgets, and office electronics. Since 2007, Star Tech has been delivering genuine computer products with official warranty, exceptional customer service, and unmatched competitive prices.
-                </p>
-                <p>
-                    Whether you are a competitive gamer building a high-end RTX desktop rig, a corporate professional seeking an ultra-thin laptop, or a creative designer needing 4K color-calibrated monitors, Star Tech provides the widest inventory across Dhaka, Chittagong, Rajshahi, Khulna, and nationwide doorstep delivery.
+                    {settings?.footer_about || `${settings?.site_name || 'Tech Shoppers'} is Bangladesh's largest retail and online shop for computers, laptops, PC gaming components, gadgets, and office electronics, delivering genuine products with official warranty, exceptional customer service, and unmatched competitive prices.`}
                 </p>
             </div>
         </FrontendLayout>

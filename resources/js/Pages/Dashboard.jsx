@@ -93,7 +93,7 @@ export default function Dashboard({
     ];
 
     return (
-        <FrontendLayout title="My Account - Star Tech">
+        <FrontendLayout title={`My Account - ${settings?.site_name || 'Tech Shoppers'}`}>
             {/* Screen Content (Hidden when printing invoice) */}
             <div className="print:hidden max-w-6xl mx-auto py-2 sm:py-4 space-y-6">
                 {/* 1. Header Profile Banner */}
@@ -144,7 +144,7 @@ export default function Dashboard({
                             method="post"
                             as="button"
                             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 text-xs bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 hover:text-white font-bold py-2.5 px-3.5 rounded-xl border border-rose-500/30 transition shadow-sm"
-                            title="Sign out of your Star Tech account"
+                            title={`Sign out of your ${settings?.site_name || 'Tech Shoppers'} account`}
                         >
                             <LogOut className="w-3.5 h-3.5" />
                             <span>Log Out</span>
@@ -680,7 +680,7 @@ export default function Dashboard({
                                 <span>Support Tickets & Messages to Admin</span>
                             </h2>
                             <p className="text-xs text-gray-500 mt-0.5">
-                                Send direct queries, warranty questions, or order inquiries directly to StarTech Support
+                                Send direct queries, warranty questions, or order inquiries directly to {settings?.site_name || 'Tech Shoppers'} Support
                             </p>
                         </div>
 
@@ -885,9 +885,11 @@ export default function Dashboard({
                     }} />
                     <div className="flex justify-between items-start border-b-2 border-black pb-4 mb-4">
                         <div>
-                            <h1 className="text-xl font-black text-[#EF4A23]">STAR TECH & ENGINEERING LTD</h1>
-                            <p className="text-[10px] text-gray-600">Leading Computer, Laptop & Component Retailer in Bangladesh</p>
-                            <p className="text-[9px] text-gray-500">Hub: Pragati Sharani, Dhaka 1212 | Hotline: {settings?.hotline || '16793'}</p>
+                            <h1 className="text-xl font-black uppercase" style={{ color: settings?.primary_color || '#EF4A23' }}>
+                                {settings?.site_name || 'Tech Shoppers'}
+                            </h1>
+                            <p className="text-[10px] text-gray-600">{settings?.site_tagline || 'Leading Computer, Laptop & Component Retailer in Bangladesh'}</p>
+                            <p className="text-[9px] text-gray-500">Hub: {settings?.address || 'Pragati Sharani, Dhaka 1212'} | Hotline: {settings?.hotline || '16793'}</p>
                         </div>
                         <div className="text-right">
                             <h2 className="text-base font-black">CUSTOMER INVOICE</h2>
@@ -956,7 +958,7 @@ export default function Dashboard({
                     </table>
 
                     <div className="mt-8 pt-4 border-t border-gray-400 text-center text-[9px] text-gray-500">
-                        Thank you for shopping with Star Tech & Engineering Ltd! | Helpline: 16793 | www.startech.com.bd
+                        Thank you for shopping with {settings?.site_name || 'Tech Shoppers'}! | Hotline: {settings?.hotline || '16793'} {settings?.email ? `| Email: ${settings.email}` : ''}
                     </div>
                 </div>
             )}

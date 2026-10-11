@@ -23,12 +23,14 @@ class SearchController extends Controller
         $query = $request->input('q', '');
         $products = $this->productRepo->search($query, 16)->withQueryString();
 
+        $siteName = \App\Models\Setting::get('site_name', 'Tech Shoppers');
+
         return Inertia::render('Frontend/Search', [
             'query' => $query,
             'products' => $products,
             'seo' => [
-                'title' => ($query ? "Search results for '{$query}'" : 'Search Products') . ' | Star Tech',
-                'description' => "Search laptop, desktop, graphics card, processor at Star Tech.",
+                'title' => ($query ? "Search results for '{$query}'" : 'Search Products') . " | {$siteName}",
+                'description' => "Search laptop, desktop, graphics card, processor at {$siteName}.",
             ],
         ]);
     }

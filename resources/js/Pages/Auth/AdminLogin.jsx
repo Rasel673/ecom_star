@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { 
     Shield, 
     Lock, 
@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminLogin({ status }) {
+    const { settings } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -41,7 +42,7 @@ export default function AdminLogin({ status }) {
 
     return (
         <div className="min-h-screen bg-[#050B14] text-gray-200 flex flex-col justify-between relative overflow-hidden font-sans selection:bg-[#EF4A23] selection:text-white">
-            <Head title="Admin Security Gateway - Star Tech" />
+            <Head title={`Admin Security Gateway - ${settings?.site_name || 'Tech Shoppers'}`} />
 
             {/* Cyber Grid Background overlay */}
             <div 
@@ -60,8 +61,25 @@ export default function AdminLogin({ status }) {
                 <div className="max-w-6xl mx-auto flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Link href="/" className="flex items-center gap-2">
-                            <span className="text-xl font-black tracking-tight text-white">STAR</span>
-                            <span className="text-xl font-black tracking-tight text-[#EF4A23]">TECH</span>
+                            {settings?.site_logo ? (
+                                <img 
+                                    src={settings.site_logo} 
+                                    alt={settings?.site_name || 'Logo'} 
+                                    className="max-h-7 max-w-[120px] object-contain" 
+                                />
+                            ) : (
+                                <>
+                                    <span className="text-xl font-black tracking-tight text-white">
+                                        {settings?.site_name ? settings.site_name.split(' ')[0] : 'TECH'}
+                                    </span>
+                                    <span 
+                                        className="text-xl font-black tracking-tight"
+                                        style={{ color: settings?.primary_color || '#EF4A23' }}
+                                    >
+                                        {settings?.site_name ? (settings.site_name.split(' ').slice(1).join(' ') || 'SHOPPERS') : 'SHOPPERS'}
+                                    </span>
+                                </>
+                            )}
                         </Link>
                         <span className="h-4 w-[1px] bg-gray-700"></span>
                         <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-orange-950/40 text-orange-400 border border-orange-800/60 text-[10px] font-mono font-bold uppercase tracking-wider">
@@ -95,7 +113,7 @@ export default function AdminLogin({ status }) {
                             Admin Authentication
                         </h1>
                         <p className="text-xs text-gray-400 mt-1">
-                            Authorized StarTech personnel and store operators only
+                            Authorized {settings?.site_name || 'Tech Shoppers'} personnel and store operators only
                         </p>
                     </div>
 
@@ -231,7 +249,7 @@ export default function AdminLogin({ status }) {
                     <div className="mt-8 pt-4 border-t border-gray-800 text-center space-y-2">
                         <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-500">
                             <Server className="w-3.5 h-3.5 text-emerald-400" />
-                            <span>StarTech SSL Protected &bull; Audit Logging Active</span>
+                            <span>{settings?.site_name || 'Tech Shoppers'} SSL Protected &bull; Audit Logging Active</span>
                         </div>
                         <p className="text-[10px] text-gray-600">
                             Need customer access instead?{' '}
@@ -245,7 +263,7 @@ export default function AdminLogin({ status }) {
 
             {/* Bottom Footer */}
             <footer className="relative z-10 border-t border-gray-800/80 py-3 text-center text-[11px] text-gray-500 bg-[#08121E]/60">
-                &copy; {new Date().getFullYear()} Star Tech & Engineering Ltd &bull; Internal Systems Division
+                &copy; {new Date().getFullYear()} {settings?.site_name || 'Tech Shoppers'} &bull; Internal Systems Division
             </footer>
         </div>
     );

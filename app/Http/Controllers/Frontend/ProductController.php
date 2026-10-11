@@ -34,7 +34,7 @@ class ProductController extends Controller
             'product' => $product,
             'relatedProducts' => $relatedProducts,
             'seo' => [
-                'title' => ($product->meta_title ?: $product->name) . ' Price in BD | Star Tech',
+                'title' => ($product->meta_title ?: $product->name) . ' Price in BD | ' . \App\Models\Setting::get('site_name', 'Tech Shoppers'),
                 'description' => $product->meta_description ?: (($product->model ? $product->model . ' - ' : '') . Str::limit(strip_tags($product->description ?? ''), 150)),
                 'image' => $product->thumbnail,
             ],

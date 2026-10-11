@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm, Link } from '@inertiajs/react';
+import { useForm, Link, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { 
     ArrowLeft, CheckCircle2, AlertTriangle, ShieldCheck, ShieldAlert, ShieldX, 
@@ -7,6 +7,13 @@ import {
 } from 'lucide-react';
 
 export default function Show({ order, fraudAnalysis }) {
+    const { settings } = usePage().props;
+    const siteName = settings?.site_name || 'Tech Shoppers';
+    const hotline = settings?.hotline || '16793';
+    const address = settings?.address || 'Dhaka, Bangladesh';
+    const tagline = settings?.site_tagline || 'Leading Computer & Tech Retailer in Bangladesh';
+    const primaryColor = settings?.primary_color || '#EF4A23';
+
     const [copiedTracking, setCopiedTracking] = useState(false);
     const [printMode, setPrintMode] = useState('invoice'); // 'invoice' | 'courier_label'
 
@@ -109,7 +116,7 @@ export default function Show({ order, fraudAnalysis }) {
         { id: 'redx', name: 'RedX Logistics', desc: 'Nationwide coverage with reverse logistics' },
         { id: 'paperfly', name: 'Paperfly Courier', desc: 'Union-level doorstep delivery across BD' },
         { id: 'sundarban', name: 'Sundarban Courier', desc: 'Traditional transport & branch collection' },
-        { id: 'startech_rider', name: 'Star Tech Express Rider', desc: 'In-house dedicated express Dhaka delivery' },
+        { id: 'startech_rider', name: `${siteName} Express Rider`, desc: 'In-house dedicated express Dhaka delivery' },
     ];
 
     return (
@@ -623,8 +630,8 @@ export default function Show({ order, fraudAnalysis }) {
                         {/* Courier & Sender Header */}
                         <div className="border-b-2 border-black pb-2 flex items-center justify-between">
                             <div>
-                                <h1 className="text-base font-black tracking-tighter">STAR TECH & ENGINEERING LTD</h1>
-                                <p className="text-[9px] text-gray-600">Hub: Pragati Sharani, Dhaka 1212 | Hotline: 16793</p>
+                                <h1 className="text-base font-black tracking-tighter uppercase">{siteName}</h1>
+                                <p className="text-[9px] text-gray-600">Hub: {address} | Hotline: {hotline}</p>
                             </div>
                             <div className="text-right">
                                 <span className="text-[10px] uppercase font-black px-1.5 py-0.5 border border-black rounded">
@@ -679,7 +686,7 @@ export default function Show({ order, fraudAnalysis }) {
                         </div>
 
                         <div className="mt-3 pt-2 border-t border-gray-400 text-center text-[8px] text-gray-500">
-                            Printed from Star Tech Admin Portal. Handle with care.
+                            Printed from {siteName} Admin Portal. Handle with care.
                         </div>
                     </div>
                 ) : (
@@ -687,8 +694,8 @@ export default function Show({ order, fraudAnalysis }) {
                     <div className="max-w-2xl mx-auto p-6 font-sans text-xs">
                         <div className="flex justify-between items-center border-b pb-4 mb-4">
                             <div>
-                                <h1 className="text-lg font-black text-[#EF4A23]">STAR TECH & ENGINEERING LTD</h1>
-                                <p className="text-[10px] text-gray-500">Leading Computer, Laptop & Component Retailer in Bangladesh</p>
+                                <h1 className="text-lg font-black uppercase" style={{ color: primaryColor }}>{siteName}</h1>
+                                <p className="text-[10px] text-gray-500">{tagline}</p>
                             </div>
                             <div className="text-right">
                                 <h2 className="text-sm font-black">INVOICE</h2>
@@ -743,7 +750,7 @@ export default function Show({ order, fraudAnalysis }) {
                         </table>
 
                         <p className="text-center text-[9px] text-gray-500 mt-6">
-                            Thank you for shopping with Star Tech & Engineering Ltd! Hotline: 16793
+                            Thank you for shopping with {siteName}! Hotline: {hotline}
                         </p>
                     </div>
                 )}

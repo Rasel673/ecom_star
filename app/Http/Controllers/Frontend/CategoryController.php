@@ -93,8 +93,8 @@ class CategoryController extends Controller
             'brands' => $brands,
             'filters' => $filters,
             'seo' => [
-                'title' => ($category->meta_title ?: $category->name) . ' Price in Bangladesh | Star Tech',
-                'description' => $category->meta_description ?: "Buy {$category->name} in Bangladesh at the lowest price from Star Tech.",
+                'title' => ($category->meta_title ?: $category->name) . ' Price in Bangladesh | ' . \App\Models\Setting::get('site_name', 'Tech Shoppers'),
+                'description' => $category->meta_description ?: ("Buy {$category->name} in Bangladesh at the lowest price from " . \App\Models\Setting::get('site_name', 'Tech Shoppers') . '.'),
             ],
         ]);
     }

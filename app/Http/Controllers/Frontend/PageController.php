@@ -48,7 +48,7 @@ class PageController extends Controller
                 'phone' => $request->query('phone', ''),
             ],
             'seo' => [
-                'title' => $page->meta_title ?: "{$page->title} - Star Tech & Engineering Ltd",
+                'title' => $page->meta_title ?: "{$page->title} - " . \App\Models\Setting::get('site_name', 'Tech Shoppers'),
                 'description' => $page->meta_description ?: ($page->subtitle ?: substr(strip_tags($page->content), 0, 160)),
             ],
         ]);

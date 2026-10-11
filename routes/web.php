@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\CustomerDashboardController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\AdminPageController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -116,6 +117,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Dynamic Pages CMS CRUD
     Route::resource('pages', AdminPageController::class);
     Route::patch('/pages/{page}/toggle-status', [AdminPageController::class, 'toggleStatus'])->name('pages.toggle-status');
+
+    // Site Settings
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
 require __DIR__.'/auth.php';

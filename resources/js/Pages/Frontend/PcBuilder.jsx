@@ -126,7 +126,7 @@ export default function PcBuilder({ components = [], seo = {} }) {
                                 </div>
                                 <div>
                                     <h1 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-                                        PC Builder - Build Your Own Computer - Star Tech
+                                        PC Builder - Build Your Own Computer - {settings?.site_name || 'Tech Shoppers'}
                                     </h1>
                                     <p className="text-xs text-gray-500 mt-0.5">
                                         Select and customize desktop hardware with real-time price & wattage calculation.
@@ -421,16 +421,21 @@ export default function PcBuilder({ components = [], seo = {} }) {
                 {/* Printable StarTech Header */}
                 <div className="border-b-2 border-black pb-4 mb-6 flex justify-between items-start">
                     <div>
-                        <div className="flex items-center gap-1">
-                            <span className="text-2xl font-black tracking-tight">STAR</span>
-                            <span className="text-2xl font-black tracking-tight text-[#EF4A23]">TECH</span>
-                        </div>
-                        <p className="text-xs text-gray-600 font-semibold mt-1">Star Tech & Engineering Ltd</p>
+                        {settings?.site_logo ? (
+                            <img src={settings.site_logo} alt={settings?.site_name || 'Logo'} className="max-h-10 object-contain mb-2" />
+                        ) : (
+                            <div className="flex items-center gap-1 mb-1">
+                                <span className="text-2xl font-black tracking-tight uppercase" style={{ color: settings?.primary_color || '#EF4A23' }}>
+                                    {settings?.site_name || 'TECH SHOPPERS'}
+                                </span>
+                            </div>
+                        )}
+                        <p className="text-xs text-gray-600 font-semibold">{settings?.site_name || 'Tech Shoppers'}</p>
                         <p className="text-[10px] text-gray-500">
                             {settings?.address || '28 Kazi Nazrul Islam Avenue, Banglamotor, Dhaka 1000'}
                         </p>
                         <p className="text-[10px] text-gray-500">
-                            Hotline: {settings?.hotline || '16793'} | Web: www.startech.com.bd
+                            Hotline: {settings?.hotline || '16793'} {settings?.email ? `| Email: ${settings.email}` : ''}
                         </p>
                     </div>
 
@@ -516,7 +521,7 @@ export default function PcBuilder({ components = [], seo = {} }) {
                     </div>
                     <div className="text-right">
                         <div className="w-40 border-b border-gray-400 mb-1 ml-auto"></div>
-                        <p>Star Tech Authorized Signature</p>
+                        <p>{settings?.site_name || 'Tech Shoppers'} Authorized Signature</p>
                     </div>
                 </div>
             </div>

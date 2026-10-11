@@ -3,13 +3,16 @@ import { Link, usePage } from '@inertiajs/react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
 export default function Navbar() {
-    const { categoriesNav } = usePage().props;
+    const { categoriesNav, settings } = usePage().props;
     const [activeHover, setActiveHover] = useState(null);
 
     if (!categoriesNav || categoriesNav.length === 0) return null;
 
     return (
-        <nav className="w-full bg-[#081621] border-t border-gray-800 text-white relative z-40 hidden lg:block print:hidden">
+        <nav 
+            className="w-full border-t border-gray-800 text-white relative z-40 hidden lg:block print:hidden"
+            style={{ backgroundColor: settings?.header_bg_color || '#081621' }}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ul className="flex items-center justify-between text-xs font-semibold">
                     {categoriesNav.map((cat) => {

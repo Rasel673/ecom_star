@@ -24,8 +24,14 @@ import {
     User
 } from 'lucide-react';
 
+const WhatsAppIcon = ({ className = "w-4 h-4" }) => (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.974.557 1.956.884 3.01.884l.003-.001c3.181 0 5.767-2.586 5.768-5.766 0-1.54-.599-2.989-1.688-4.079-1.09-1.09-2.538-1.69-4.29-1.69zm7.042 12.809c-1.89 1.889-4.398 2.93-7.07 2.93-.007 0-.014 0-.02 0-2.433 0-4.814-.654-6.885-1.891l-4.798 1.258 1.28-4.673c-1.357-2.148-2.073-4.636-2.072-7.189.003-7.513 6.118-13.626 13.633-13.626 3.638 0 7.059 1.417 9.632 3.99 2.573 2.573 3.99 5.993 3.99 9.632 0 3.638-1.417 7.058-3.69 9.569z" />
+    </svg>
+);
+
 export default function ProductDetail({ product, relatedProducts = [], seo = {} }) {
-    const { auth } = usePage().props;
+    const { auth, settings } = usePage().props;
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState('specs'); // 'specs', 'description', 'reviews'
     const [wishlistLoading, setWishlistLoading] = useState(false);
@@ -280,6 +286,20 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
                                     <Heart className="w-5 h-5" />
                                 </button>
                             </div>
+
+                            {/* Order on WhatsApp */}
+                            {settings?.whatsapp && (
+                                <a
+                                    href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${settings?.site_name || 'Tech Shoppers'}, I want to order/inquire about:\nProduct: ${product.name}\nQuantity: ${quantity}\nPrice: ৳${Number(price * quantity).toLocaleString()}\nLink: ${typeof window !== 'undefined' ? window.location.href : ''}`)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full mt-3 flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-emerald-500/25 transition group"
+                                >
+                                    <WhatsAppIcon className="w-5 h-5 fill-white group-hover:scale-110 transition shrink-0" />
+                                    <span>Order / Inquire on WhatsApp</span>
+                                    <span className="text-[11px] opacity-80 font-normal hidden sm:inline">({settings.whatsapp})</span>
+                                </a>
+                            )}
 
                             {!isUpcoming && (
                                 <div className="mt-3 text-right">

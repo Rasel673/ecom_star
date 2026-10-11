@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { 
     DollarSign, 
@@ -28,18 +28,21 @@ export default function Dashboard({
     recentMessages = [],
     recentPreOrders = []
 }) {
+    const { settings } = usePage().props;
+    const siteName = settings?.site_name || 'Tech Shoppers';
+
     // Find maximum sales in trends for proportional SVG heights
     const maxSales = Math.max(...salesTrends.map(t => t.sales || 0), 10000);
     const [hoveredTrend, setHoveredTrend] = useState(null);
 
     return (
-        <AdminLayout title="StarTech Control Dashboard">
+        <AdminLayout title={`${siteName} Control Dashboard`}>
             {/* Top Welcome & Quick Actions Bar */}
             <div className="bg-[#081621] text-white rounded-2xl p-6 mb-8 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-gray-800">
                 <div className="relative z-10">
                     <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-bold mb-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>StarTech System Live & Operational</span>
+                        <span>{siteName} System Live & Operational</span>
                     </div>
                     <h1 className="text-xl sm:text-2xl font-black tracking-tight">
                         Store Overview & Live Analytics
@@ -221,7 +224,7 @@ export default function Dashboard({
 
                     <div className="flex items-center justify-between text-[11px] text-gray-400 pt-3">
                         <span>Past 7 days performance</span>
-                        <span className="font-semibold text-gray-700">StarTech E-Commerce Engine</span>
+                        <span className="font-semibold text-gray-700">{siteName} E-Commerce Engine</span>
                     </div>
                 </div>
 

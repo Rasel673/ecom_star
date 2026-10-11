@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { 
     Mail, 
     Lock, 
@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export default function Login({ status, canResetPassword }) {
+    const { settings } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -42,24 +43,38 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <div className="min-h-screen bg-[#F4F7F9] flex flex-col justify-between text-gray-800">
-            <Head title="Customer Login - Star Tech" />
+            <Head title={`Customer Login - ${settings?.site_name || 'Tech Shoppers'}`} />
 
             {/* Top Minimal Bar */}
             <header className="bg-white border-b border-gray-200 py-3.5 px-4 sm:px-8">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-2 group">
-                        <span className="text-2xl font-black tracking-tight text-[#081621] group-hover:opacity-90">
-                            STAR
-                        </span>
-                        <span className="text-2xl font-black tracking-tight text-[#EF4A23]">
-                            TECH
-                        </span>
+                        {settings?.site_logo ? (
+                            <img 
+                                src={settings.site_logo} 
+                                alt={settings?.site_name || 'Logo'} 
+                                className="max-h-8 max-w-[150px] object-contain" 
+                            />
+                        ) : (
+                            <>
+                                <span className="text-2xl font-black tracking-tight text-[#081621] group-hover:opacity-90">
+                                    {settings?.site_name ? settings.site_name.split(' ')[0] : 'TECH'}
+                                </span>
+                                <span 
+                                    className="text-2xl font-black tracking-tight"
+                                    style={{ color: settings?.primary_color || '#EF4A23' }}
+                                >
+                                    {settings?.site_name ? (settings.site_name.split(' ').slice(1).join(' ') || 'SHOPPERS') : 'SHOPPERS'}
+                                </span>
+                            </>
+                        )}
                     </Link>
                     <div className="flex items-center gap-3 text-xs">
-                        <span className="text-gray-500 hidden sm:inline">New to Star Tech?</span>
+                        <span className="text-gray-500 hidden sm:inline">New to {settings?.site_name || 'Tech Shoppers'}?</span>
                         <Link 
                             href={route('register')} 
-                            className="font-bold text-[#EF4A23] hover:underline"
+                            className="font-bold hover:underline"
+                            style={{ color: settings?.primary_color || '#EF4A23' }}
                         >
                             Create an Account
                         </Link>
@@ -71,7 +86,7 @@ export default function Login({ status, canResetPassword }) {
             <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-10">
                 <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-gray-200/90 overflow-hidden grid grid-cols-1 md:grid-cols-12">
                     
-                    {/* Left: StarTech Brand Perks Showcase */}
+                    {/* Left: Tech Shoppers Brand Perks Showcase */}
                     <div className="hidden md:flex md:col-span-5 bg-gradient-to-br from-[#081621] via-[#112538] to-[#081621] p-8 text-white flex-col justify-between relative overflow-hidden">
                         {/* Decorative background circle */}
                         <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-orange-600/15 blur-2xl pointer-events-none"></div>
@@ -80,7 +95,7 @@ export default function Login({ status, canResetPassword }) {
                         <div className="relative z-10">
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[11px] font-bold mb-6">
                                 <Sparkles className="w-3.5 h-3.5" />
-                                <span>StarTech Customer Portal</span>
+                                <span>{settings?.site_name || 'Tech Shoppers'} Customer Portal</span>
                             </div>
 
                             <h2 className="text-2xl font-black leading-tight mb-2">
@@ -278,7 +293,7 @@ export default function Login({ status, canResetPassword }) {
 
                             {/* Don't have an account */}
                             <div className="mt-6 text-center text-xs text-gray-500">
-                                Don't have a StarTech account?{' '}
+                                Don't have a {settings?.site_name || 'Tech Shoppers'} account?{' '}
                                 <Link 
                                     href={route('register')} 
                                     className="font-bold text-[#EF4A23] hover:underline"
@@ -290,7 +305,7 @@ export default function Login({ status, canResetPassword }) {
 
                         {/* Admin Portal Gateway footer */}
                         <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
-                            <span>StarTech Internal Employee?</span>
+                            <span>Internal Staff Member?</span>
                             <Link 
                                 href={route('admin.login')}
                                 className="font-bold text-gray-700 hover:text-[#EF4A23] transition flex items-center gap-1"
@@ -305,7 +320,7 @@ export default function Login({ status, canResetPassword }) {
 
             {/* Bottom Footer Info */}
             <footer className="py-4 text-center text-xs text-gray-400 border-t border-gray-200 bg-white">
-                &copy; {new Date().getFullYear()} Star Tech & Engineering Ltd. All Rights Reserved.
+                &copy; {new Date().getFullYear()} {settings?.site_name || 'Tech Shoppers'}. All Rights Reserved.
             </footer>
         </div>
     );
