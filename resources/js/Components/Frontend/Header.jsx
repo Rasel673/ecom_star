@@ -107,7 +107,7 @@ export default function Header() {
 
     return (
         <>
-            <header className="w-full bg-[#081621] text-white sticky top-0 z-50 shadow-md print:hidden">
+            <header className="w-full bg-[#081621] text-white">
                 {/* 1. Top Bar */}
                 <div className="border-b border-gray-800 text-[11px] sm:text-xs py-1.5 px-3 sm:px-6 lg:px-8">
                     <div className="max-w-7xl mx-auto flex items-center justify-between">

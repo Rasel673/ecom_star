@@ -57,7 +57,7 @@ export default function FrontendLayout({ children, title, description, image }) 
                 </div>
             )}
 
-            <div className="print:hidden">
+            <div className="print:hidden sticky top-0 z-50 shadow-md">
                 <Header />
                 <Navbar />
             </div>
