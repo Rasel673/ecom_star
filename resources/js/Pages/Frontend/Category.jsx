@@ -185,7 +185,7 @@ export default function Category({
         <FrontendLayout title={seo.title} description={seo.description}>
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-500 mb-4 sm:mb-6 overflow-x-auto whitespace-nowrap pb-1">
-                <Link href="/" className="hover:text-[#EF4A23] shrink-0">Home</Link>
+                <Link href={route('home')} className="hover:text-[#EF4A23] shrink-0">Home</Link>
                 <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                 {category.parent && (
                     <>
@@ -306,9 +306,8 @@ export default function Category({
                                         key={idx}
                                         href={link.url || '#'}
                                         dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className={`px-3 py-1.5 text-xs rounded-lg transition font-medium ${
-                                            link.active ? 'bg-[#EF4A23] text-white font-bold' : 'text-gray-700 hover:bg-gray-100'
-                                        }`}
+                                        className={`px-3 py-1.5 text-xs rounded-lg transition font-medium ${link.active ? 'bg-[#EF4A23] text-white font-bold' : 'text-gray-700 hover:bg-gray-100'
+                                            }`}
                                     />
                                 ))}
                             </div>
@@ -320,7 +319,7 @@ export default function Category({
             {/* Mobile Filter Slide-Over Drawer */}
             {mobileFilterOpen && (
                 <div className="fixed inset-0 z-50 lg:hidden flex">
-                    <div 
+                    <div
                         className="fixed inset-0 bg-black/60 backdrop-blur-sm"
                         onClick={() => setMobileFilterOpen(false)}
                     />

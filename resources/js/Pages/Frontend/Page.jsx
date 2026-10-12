@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
-import { 
-    ChevronRight, 
-    Calculator, 
-    Truck, 
-    PhoneCall, 
-    Wrench, 
-    Search, 
-    CheckCircle2, 
-    Clock, 
-    MapPin, 
-    Mail, 
-    Send, 
-    Package, 
-    ExternalLink, 
-    AlertCircle, 
-    ShieldCheck, 
+import {
+    ChevronRight,
+    Calculator,
+    Truck,
+    PhoneCall,
+    Wrench,
+    Search,
+    CheckCircle2,
+    Clock,
+    MapPin,
+    Mail,
+    Send,
+    Package,
+    ExternalLink,
+    AlertCircle,
+    ShieldCheck,
     CreditCard,
     Building2,
     Calendar,
@@ -72,8 +72,8 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
 
     const currentBankObj = EMI_BANKS.find(b => b.name === emiBank) || EMI_BANKS[0];
     const financedAmount = Math.max(0, emiPrice - emiDownPayment);
-    const monthlyInstallment = emiMonths > 0 
-        ? Math.round((financedAmount * (1 + (emiRate / 100))) / emiMonths) 
+    const monthlyInstallment = emiMonths > 0
+        ? Math.round((financedAmount * (1 + (emiRate / 100))) / emiMonths)
         : 0;
     const totalPayable = (monthlyInstallment * emiMonths) + Number(emiDownPayment);
 
@@ -128,7 +128,7 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
     };
 
     return (
-        <FrontendLayout 
+        <FrontendLayout
             title={seo.title || page.title}
             description={seo.description || page.subtitle}
         >
@@ -171,7 +171,7 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                 <span>Look Up Your Order Status</span>
                             </h2>
                             <p className="text-xs text-gray-500 mb-6">
-                                Enter your StarTech Order Number (e.g. ST-261008-1234) and/or your checkout phone number.
+                                Enter your Tech Shoppers Order Number (e.g. ST-261008-1234) and/or your checkout phone number.
                             </p>
 
                             <form onSubmit={handleSearchOrder} className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
@@ -237,31 +237,30 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                     <div className="grid grid-cols-4 gap-2 text-center text-xs">
                                         {[
                                             { key: 'placed', label: 'Order Placed', active: true, icon: CheckCircle2 },
-                                            { 
-                                                key: 'processing', 
-                                                label: 'Processing', 
-                                                active: ['processing', 'dispatched', 'delivered'].includes(trackingResult.order_status), 
-                                                icon: Clock 
+                                            {
+                                                key: 'processing',
+                                                label: 'Processing',
+                                                active: ['processing', 'dispatched', 'delivered'].includes(trackingResult.order_status),
+                                                icon: Clock
                                             },
-                                            { 
-                                                key: 'dispatched', 
-                                                label: 'Dispatched', 
-                                                active: ['dispatched', 'delivered'].includes(trackingResult.order_status) || Boolean(trackingResult.courier_tracking_id), 
-                                                icon: Truck 
+                                            {
+                                                key: 'dispatched',
+                                                label: 'Dispatched',
+                                                active: ['dispatched', 'delivered'].includes(trackingResult.order_status) || Boolean(trackingResult.courier_tracking_id),
+                                                icon: Truck
                                             },
-                                            { 
-                                                key: 'delivered', 
-                                                label: 'Delivered', 
-                                                active: trackingResult.order_status === 'delivered', 
-                                                icon: ShieldCheck 
+                                            {
+                                                key: 'delivered',
+                                                label: 'Delivered',
+                                                active: trackingResult.order_status === 'delivered',
+                                                icon: ShieldCheck
                                             },
                                         ].map((step, idx) => {
                                             const Icon = step.icon;
                                             return (
                                                 <div key={idx} className="flex flex-col items-center">
-                                                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mb-1.5 transition ${
-                                                        step.active ? 'bg-emerald-600 text-white shadow-md' : 'bg-gray-100 text-gray-400'
-                                                    }`}>
+                                                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mb-1.5 transition ${step.active ? 'bg-emerald-600 text-white shadow-md' : 'bg-gray-100 text-gray-400'
+                                                        }`}>
                                                         <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                                                     </div>
                                                     <span className={`text-[11px] sm:text-xs font-bold ${step.active ? 'text-gray-900' : 'text-gray-400'}`}>
@@ -402,11 +401,10 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                                 key={preset}
                                                 type="button"
                                                 onClick={() => setEmiPrice(preset)}
-                                                className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition border ${
-                                                    emiPrice === preset
+                                                className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition border ${emiPrice === preset
                                                         ? 'bg-[#EF4A23] text-white border-[#EF4A23]'
                                                         : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
-                                                }`}
+                                                    }`}
                                             >
                                                 ৳{(preset / 1000).toFixed(0)}k
                                             </button>
@@ -443,11 +441,10 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                                     key={pct}
                                                     type="button"
                                                     onClick={() => setEmiDownPayment(calculated)}
-                                                    className={`px-2 py-1 text-[11px] font-semibold rounded-lg transition border ${
-                                                        emiDownPayment === calculated
+                                                    className={`px-2 py-1 text-[11px] font-semibold rounded-lg transition border ${emiDownPayment === calculated
                                                             ? 'bg-[#EF4A23] text-white border-[#EF4A23]'
                                                             : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
-                                                    }`}
+                                                        }`}
                                                 >
                                                     {pct}%
                                                 </button>
@@ -508,13 +505,12 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                                     type="button"
                                                     disabled={!isSupported}
                                                     onClick={() => setEmiMonths(m)}
-                                                    className={`py-2.5 px-2 text-xs font-bold rounded-xl border text-center transition flex flex-col items-center justify-center ${
-                                                        !isSupported
+                                                    className={`py-2.5 px-2 text-xs font-bold rounded-xl border text-center transition flex flex-col items-center justify-center ${!isSupported
                                                             ? 'opacity-40 bg-gray-50 border-gray-200 cursor-not-allowed'
                                                             : isSelected
-                                                            ? 'bg-[#081621] text-white border-[#081621] shadow-md ring-2 ring-[#EF4A23]/30 scale-[1.02]'
-                                                            : 'bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                                                    }`}
+                                                                ? 'bg-[#081621] text-white border-[#081621] shadow-md ring-2 ring-[#EF4A23]/30 scale-[1.02]'
+                                                                : 'bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                                                        }`}
                                                 >
                                                     <span className={isSelected ? 'text-orange-400' : ''}>{m}M</span>
                                                     <span className={`text-[10px] mt-0.5 ${isSelected ? 'text-gray-200' : 'text-gray-400'}`}>
@@ -648,13 +644,12 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                                 <tr
                                                     key={m}
                                                     onClick={() => isSupported && setEmiMonths(m)}
-                                                    className={`transition cursor-pointer ${
-                                                        isSelected
+                                                    className={`transition cursor-pointer ${isSelected
                                                             ? 'bg-orange-50/80 font-bold text-gray-900'
                                                             : isSupported
-                                                            ? 'hover:bg-gray-50 text-gray-700'
-                                                            : 'opacity-40 bg-gray-50/30 text-gray-400 cursor-not-allowed'
-                                                    }`}
+                                                                ? 'hover:bg-gray-50 text-gray-700'
+                                                                : 'opacity-40 bg-gray-50/30 text-gray-400 cursor-not-allowed'
+                                                        }`}
                                                 >
                                                     <td className="py-3.5 px-6">
                                                         <span className={`inline-flex items-center gap-2 ${isSelected ? 'text-[#EF4A23]' : ''}`}>
@@ -694,13 +689,12 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                                                 e.stopPropagation();
                                                                 if (isSupported) setEmiMonths(m);
                                                             }}
-                                                            className={`px-3 py-1 text-[11px] rounded-lg font-bold transition ${
-                                                                isSelected
+                                                            className={`px-3 py-1 text-[11px] rounded-lg font-bold transition ${isSelected
                                                                     ? 'bg-[#EF4A23] text-white shadow-xs'
                                                                     : isSupported
-                                                                    ? 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                                                                    : 'bg-gray-100 text-gray-300 cursor-not-allowed'
-                                                            }`}
+                                                                        ? 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                                                                        : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                                                                }`}
                                                         >
                                                             {isSelected ? 'Active Plan' : 'Select'}
                                                         </button>
@@ -950,7 +944,7 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                         className="w-full py-3 px-4 bg-[#EF4A23] hover:bg-[#d63c17] text-white font-bold text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                                     >
                                         <Send className="w-4 h-4" />
-                                        <span>{inquiryProcessing ? 'Submitting...' : 'Send Message to StarTech'}</span>
+                                        <span>{inquiryProcessing ? 'Submitting...' : 'Send Message to Tech Shoppers'}</span>
                                     </button>
                                 </form>
                             </div>
@@ -970,7 +964,7 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                                     <div className="text-xs text-gray-300 space-y-2">
                                         <div className="flex items-start gap-2">
                                             <Mail className="w-4 h-4 text-[#EF4A23] shrink-0 mt-0.5" />
-                                            <span>info@startech.com.bd &bull; support@startech.com.bd</span>
+                                            <span>info@techshoppers.com &bull; support@techshoppers.com</span>
                                         </div>
                                         <div className="flex items-start gap-2">
                                             <MapPin className="w-4 h-4 text-[#EF4A23] shrink-0 mt-0.5" />
@@ -1001,7 +995,7 @@ export default function Page({ page, trackingResult = null, searchQuery = {}, se
                 {/* ========================================================= */}
                 {page.content && (
                     <div className="bg-white p-6 sm:p-10 rounded-3xl border border-gray-200/90 shadow-sm">
-                        <div 
+                        <div
                             className="prose prose-sm sm:prose max-w-none text-gray-700 leading-relaxed space-y-4"
                             dangerouslySetInnerHTML={{ __html: page.content }}
                         />

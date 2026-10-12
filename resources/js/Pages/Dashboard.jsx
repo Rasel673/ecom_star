@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Head, Link, usePage, useForm, router } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
-import { 
-    Package, User, ShoppingBag, Clock, CheckCircle2, ArrowRight, Printer, 
-    Cpu, Heart, MessageSquare, Send, Trash2, ExternalLink, Calendar, 
-    CreditCard, Truck, ShieldCheck, HelpCircle, AlertCircle, ShoppingCart, 
+import {
+    Package, User, ShoppingBag, Clock, CheckCircle2, ArrowRight, Printer,
+    Cpu, Heart, MessageSquare, Send, Trash2, ExternalLink, Calendar,
+    CreditCard, Truck, ShieldCheck, HelpCircle, AlertCircle, ShoppingCart,
     ChevronDown, ChevronUp, Copy, Check, LogOut
 } from 'lucide-react';
 
-export default function Dashboard({ 
-    orders = [], 
-    pcBuilds = [], 
-    wishlists = [], 
-    messages = [], 
-    preOrders = [], 
+export default function Dashboard({
+    orders = [],
+    pcBuilds = [],
+    wishlists = [],
+    messages = [],
+    preOrders = [],
     userStats = {},
     activeDeliveryOrder = null,
-    activeTab: initialTab = 'orders' 
+    activeTab: initialTab = 'orders'
 }) {
     const { auth, settings } = usePage().props;
     const [currentTab, setCurrentTab] = useState(initialTab);
@@ -25,12 +25,12 @@ export default function Dashboard({
     const [copiedTracking, setCopiedTracking] = useState(false);
 
     // Message to admin form
-    const { 
-        data: messageData, 
-        setData: setMessageData, 
-        post: postMessage, 
-        processing: messageProcessing, 
-        reset: resetMessage 
+    const {
+        data: messageData,
+        setData: setMessageData,
+        post: postMessage,
+        processing: messageProcessing,
+        reset: resetMessage
     } = useForm({
         subject: '',
         order_number: '',
@@ -82,12 +82,12 @@ export default function Dashboard({
         { id: 'pc_builds', name: 'Saved PC Builds', icon: Cpu, count: pcBuilds?.length || 0 },
         { id: 'wishlist', name: 'Favorites / Wishlist', icon: Heart, count: wishlists?.length || 0 },
         { id: 'pre_orders', name: 'Pre-Orders', icon: Clock, count: preOrders?.length || 0 },
-        { 
-            id: 'messages', 
-            name: 'Message to Admin', 
-            icon: MessageSquare, 
+        {
+            id: 'messages',
+            name: 'Message to Admin',
+            icon: MessageSquare,
             count: messages?.length || 0,
-            hasUnread: (userStats?.unreadRepliesCount || 0) > 0 
+            hasUnread: (userStats?.unreadRepliesCount || 0) > 0
         },
         { id: 'profile', name: 'Account Profile', icon: User },
     ];
@@ -259,18 +259,16 @@ export default function Dashboard({
                                 key={tab.id}
                                 type="button"
                                 onClick={() => setCurrentTab(tab.id)}
-                                className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition shrink-0 relative ${
-                                    isActive
+                                className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition shrink-0 relative ${isActive
                                         ? 'bg-[#081621] text-white shadow-sm'
                                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                                }`}
+                                    }`}
                             >
                                 <Icon className={`w-4 h-4 ${isActive ? 'text-[#EF4A23]' : 'text-gray-400'}`} />
                                 <span>{tab.name}</span>
                                 {tab.count !== undefined && (
-                                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
-                                        isActive ? 'bg-[#EF4A23] text-white' : 'bg-gray-200 text-gray-700'
-                                    }`}>
+                                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${isActive ? 'bg-[#EF4A23] text-white' : 'bg-gray-200 text-gray-700'
+                                        }`}>
                                         {tab.count}
                                     </span>
                                 )}
@@ -308,12 +306,11 @@ export default function Dashboard({
                                                         <span className="font-mono font-bold text-gray-900 text-sm">
                                                             #{order.order_number}
                                                         </span>
-                                                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                                            order.order_status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                                                            order.order_status === 'shipped' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                                                            order.order_status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
-                                                            'bg-gray-100 text-gray-700'
-                                                        }`}>
+                                                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${order.order_status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                                                                order.order_status === 'shipped' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                                                                    order.order_status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                                                                        'bg-gray-100 text-gray-700'
+                                                            }`}>
                                                             {order.order_status}
                                                         </span>
                                                         <span className="px-2 py-0.5 rounded-full text-[10px] uppercase font-semibold bg-gray-100 text-gray-600">
@@ -558,8 +555,8 @@ export default function Dashboard({
                                             </div>
 
                                             <div>
-                                                <Link 
-                                                    href={route('product.show', p.slug)} 
+                                                <Link
+                                                    href={route('product.show', p.slug)}
                                                     className="text-xs font-bold text-gray-900 hover:text-[#EF4A23] line-clamp-2 leading-snug"
                                                 >
                                                     {p.name}
@@ -617,11 +614,10 @@ export default function Dashboard({
                                                 <span className="font-mono font-bold text-gray-900 text-sm">
                                                     #{po.pre_order_number}
                                                 </span>
-                                                <span className={`ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                                    po.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                                                    po.status === 'ready_to_ship' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                                                    'bg-amber-50 text-amber-700 border border-amber-200'
-                                                }`}>
+                                                <span className={`ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${po.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                                                        po.status === 'ready_to_ship' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                                                            'bg-amber-50 text-amber-700 border border-amber-200'
+                                                    }`}>
                                                     {po.status}
                                                 </span>
                                             </div>
@@ -755,10 +751,9 @@ export default function Dashboard({
                                                         </span>
                                                     )}
                                                 </div>
-                                                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                                    m.status === 'replied' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                                                    'bg-amber-50 text-amber-700 border border-amber-200'
-                                                }`}>
+                                                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${m.status === 'replied' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                                                        'bg-amber-50 text-amber-700 border border-amber-200'
+                                                    }`}>
                                                     {m.status === 'replied' ? 'Replied by Admin' : 'Pending Reply'}
                                                 </span>
                                             </div>

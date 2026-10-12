@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { 
-    LayoutDashboard, 
-    FolderTree, 
-    Package, 
-    Tag, 
-    ShoppingCart, 
-    Image, 
-    LogOut, 
-    ExternalLink, 
-    Menu, 
+import {
+    LayoutDashboard,
+    FolderTree,
+    Package,
+    Tag,
+    ShoppingCart,
+    Image,
+    LogOut,
+    ExternalLink,
+    Menu,
     X,
     CheckCircle2,
     AlertCircle,
@@ -66,9 +66,8 @@ export default function AdminLayout({ children, title }) {
             {/* Flash notification */}
             {alertMessage && (
                 <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5">
-                    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl text-xs font-semibold text-white ${
-                        alertType === 'success' ? 'bg-emerald-600' : 'bg-rose-600'
-                    }`}>
+                    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl text-xs font-semibold text-white ${alertType === 'success' ? 'bg-emerald-600' : 'bg-rose-600'
+                        }`}>
                         {alertType === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
                         <span>{alertMessage}</span>
                         <button onClick={() => setAlertMessage(null)} className="ml-2 hover:opacity-75">
@@ -79,18 +78,17 @@ export default function AdminLayout({ children, title }) {
             )}
 
             {/* Sidebar Desktop & Mobile */}
-            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#081621] text-white flex flex-col justify-between transition-transform duration-300 lg:translate-x-0 ${
-                sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}>
+            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#081621] text-white flex flex-col justify-between transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                }`}>
                 <div>
                     {/* Brand header */}
                     <div className="h-16 flex items-center justify-between px-6 border-b border-gray-800">
                         <Link href={route('admin.dashboard')} className="flex items-center gap-2 max-w-[190px]">
                             {settings?.site_logo ? (
-                                <img 
-                                    src={settings.site_logo} 
-                                    alt={siteName} 
-                                    className="max-h-8 max-w-[120px] object-contain" 
+                                <img
+                                    src={settings.site_logo}
+                                    alt={siteName}
+                                    className="max-h-8 max-w-[120px] object-contain"
                                 />
                             ) : (
                                 <div className="flex items-center gap-1.5 truncate">
@@ -99,15 +97,15 @@ export default function AdminLayout({ children, title }) {
                                             <span className="text-lg font-black tracking-tight text-white truncate">
                                                 {siteName.substring(0, siteName.lastIndexOf(' '))}
                                             </span>
-                                            <span 
-                                                className="text-lg font-black tracking-tight truncate" 
+                                            <span
+                                                className="text-lg font-black tracking-tight truncate"
                                                 style={{ color: settings?.primary_color || '#EF4A23' }}
                                             >
                                                 {siteName.substring(siteName.lastIndexOf(' ') + 1)}
                                             </span>
                                         </>
                                     ) : (
-                                        <span 
+                                        <span
                                             className="text-lg font-black tracking-tight truncate"
                                             style={{ color: settings?.primary_color || '#EF4A23' }}
                                         >
@@ -116,10 +114,10 @@ export default function AdminLayout({ children, title }) {
                                     )}
                                 </div>
                             )}
-                            <span 
+                            <span
                                 className="text-[9px] font-bold px-1.5 py-0.5 rounded border shrink-0"
-                                style={{ 
-                                    backgroundColor: `${settings?.primary_color || '#EF4A23'}25`, 
+                                style={{
+                                    backgroundColor: `${settings?.primary_color || '#EF4A23'}25`,
                                     borderColor: `${settings?.primary_color || '#EF4A23'}60`,
                                     color: settings?.primary_color || '#EF4A23'
                                 }}
@@ -127,8 +125,8 @@ export default function AdminLayout({ children, title }) {
                                 ADMIN
                             </span>
                         </Link>
-                        <button 
-                            onClick={() => setSidebarOpen(false)} 
+                        <button
+                            onClick={() => setSidebarOpen(false)}
                             className="lg:hidden text-gray-400 hover:text-white"
                         >
                             <X className="w-5 h-5" />
@@ -145,11 +143,10 @@ export default function AdminLayout({ children, title }) {
                                     key={idx}
                                     href={item.href}
                                     style={isActive ? { backgroundColor: settings?.primary_color || '#EF4A23' } : {}}
-                                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition ${
-                                        isActive
+                                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition ${isActive
                                             ? 'text-white shadow-md'
                                             : 'text-gray-300 hover:bg-gray-800/60 hover:text-white'
-                                    }`}
+                                        }`}
                                 >
                                     <Icon className="w-4 h-4" />
                                     <span>{item.label}</span>
@@ -162,7 +159,7 @@ export default function AdminLayout({ children, title }) {
                 {/* Footer with Store link and Logout */}
                 <div className="p-4 border-t border-gray-800 space-y-2 text-xs">
                     <Link
-                        href="/"
+                        href={route('home')}
                         target="_blank"
                         className="flex items-center justify-between px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/60 rounded-xl transition"
                     >
@@ -201,9 +198,9 @@ export default function AdminLayout({ children, title }) {
 
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2 text-xs">
-                            <div 
+                            <div
                                 className="w-8 h-8 rounded-full font-black flex items-center justify-center"
-                                style={{ 
+                                style={{
                                     backgroundColor: `${settings?.primary_color || '#EF4A23'}18`,
                                     color: settings?.primary_color || '#EF4A23'
                                 }}

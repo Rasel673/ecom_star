@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage, router } from '@inertiajs/react';
-import { 
-    Search, 
-    ShoppingCart, 
-    User, 
-    Cpu, 
-    Zap, 
-    Gift, 
-    PhoneCall, 
-    Menu, 
+import {
+    Search,
+    ShoppingCart,
+    User,
+    Cpu,
+    Zap,
+    Gift,
+    PhoneCall,
+    Menu,
     X,
     ChevronDown,
     ChevronRight,
@@ -107,7 +107,7 @@ export default function Header() {
 
     return (
         <>
-            <header 
+            <header
                 className="w-full text-white"
                 style={{ backgroundColor: settings?.header_bg_color || '#081621' }}
             >
@@ -115,8 +115,8 @@ export default function Header() {
                 <div className="border-b border-gray-800 text-[11px] sm:text-xs py-1.5 px-3 sm:px-6 lg:px-8">
                     <div className="max-w-7xl mx-auto flex items-center justify-between">
                         <div className="flex items-center space-x-3 sm:space-x-6 text-gray-300">
-                            <a 
-                                href={`tel:${settings?.hotline || '16793'}`} 
+                            <a
+                                href={`tel:${settings?.hotline || '16793'}`}
                                 className="flex items-center gap-1.5 font-semibold hover:opacity-85 transition"
                                 style={{ color: settings?.primary_color || '#EF4A23' }}
                             >
@@ -125,7 +125,7 @@ export default function Header() {
                                 <span className="hidden sm:inline font-normal text-gray-400">({settings?.working_hours || '10 AM - 7 PM'})</span>
                             </a>
                             {settings?.whatsapp && (
-                                <a 
+                                <a
                                     href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(settings?.site_name || 'Tech Shoppers')}%2C%20I%20have%20an%20inquiry.`}
                                     target="_blank"
                                     rel="noreferrer"
@@ -155,7 +155,7 @@ export default function Header() {
                 <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-3 sm:gap-4">
                     {/* Left: Mobile Hamburger & Logo */}
                     <div className="flex items-center gap-2 sm:gap-3">
-                        <button 
+                        <button
                             type="button"
                             onClick={() => setMobileMenuOpen(true)}
                             className="lg:hidden text-gray-300 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition"
@@ -163,11 +163,11 @@ export default function Header() {
                         >
                             <Menu className="w-6 h-6" />
                         </button>
-                        <Link href="/" className="flex items-center gap-1.5 group shrink-0">
+                        <Link href={route('home')} className="flex items-center gap-1.5 group shrink-0">
                             {settings?.site_logo ? (
-                                <img 
-                                    src={settings.site_logo} 
-                                    alt={settings?.site_name || 'Logo'} 
+                                <img
+                                    src={settings.site_logo}
+                                    alt={settings?.site_name || 'Logo'}
                                     className="h-8 sm:h-9 max-w-[170px] object-contain"
                                 />
                             ) : (
@@ -175,13 +175,13 @@ export default function Header() {
                                     <span className="text-xl sm:text-2xl font-black tracking-tight text-white group-hover:text-gray-100">
                                         {settings?.site_name ? settings.site_name.split(' ')[0] : 'TECH'}
                                     </span>
-                                    <span 
+                                    <span
                                         className="text-xl sm:text-2xl font-black tracking-tight"
                                         style={{ color: settings?.primary_color || '#EF4A23' }}
                                     >
                                         {settings?.site_name ? (settings.site_name.split(' ').slice(1).join(' ') || 'SHOPPERS') : 'SHOPPERS'}
                                     </span>
-                                    <span 
+                                    <span
                                         className="w-2 h-2 rounded-full animate-pulse"
                                         style={{ backgroundColor: settings?.primary_color || '#EF4A23' }}
                                     ></span>
@@ -224,10 +224,10 @@ export default function Header() {
                                             onClick={() => setShowSuggestions(false)}
                                             className="flex items-center gap-3 p-3 hover:bg-[#162a3d] transition group"
                                         >
-                                            <img 
-                                                src={item.thumbnail || 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100'} 
+                                            <img
+                                                src={item.thumbnail || 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100'}
                                                 alt={item.name}
-                                                className="w-10 h-10 object-cover rounded bg-white p-0.5 shrink-0" 
+                                                className="w-10 h-10 object-cover rounded bg-white p-0.5 shrink-0"
                                             />
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-sm font-medium text-gray-200 group-hover:text-[#EF4A23] truncate transition">
@@ -418,10 +418,10 @@ export default function Header() {
                                         onClick={() => setShowSuggestions(false)}
                                         className="flex items-center gap-2.5 p-2.5 hover:bg-[#162a3d]"
                                     >
-                                        <img 
-                                            src={item.thumbnail || 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=80'} 
+                                        <img
+                                            src={item.thumbnail || 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=80'}
                                             alt={item.name}
-                                            className="w-8 h-8 object-cover rounded bg-white p-0.5 shrink-0" 
+                                            className="w-8 h-8 object-cover rounded bg-white p-0.5 shrink-0"
                                         />
                                         <div className="flex-1 min-w-0 text-left">
                                             <p className="text-xs font-medium text-gray-200 truncate">{item.name}</p>
@@ -441,7 +441,7 @@ export default function Header() {
             {mobileMenuOpen && (
                 <div className="fixed inset-0 z-50 lg:hidden flex print:hidden">
                     {/* Backdrop */}
-                    <div 
+                    <div
                         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
                         onClick={() => setMobileMenuOpen(false)}
                     />
@@ -450,9 +450,9 @@ export default function Header() {
                     <div className="relative w-4/5 max-w-sm bg-[#081621] text-white h-full flex flex-col shadow-2xl z-10 animate-in slide-in-from-left duration-250">
                         {/* Drawer Header */}
                         <div className="p-4 border-b border-gray-800 flex items-center justify-between">
-                            <Link 
-                                href="/" 
-                                onClick={() => setMobileMenuOpen(false)} 
+                            <Link
+                                href="/"
+                                onClick={() => setMobileMenuOpen(false)}
                                 className="flex items-center gap-1.5"
                             >
                                 {settings?.site_logo ? (
@@ -487,7 +487,7 @@ export default function Header() {
                                         </div>
                                         <div className="min-w-0">
                                             <p className="font-bold text-white truncate max-w-[120px]">{auth.user.name}</p>
-                                            <Link 
+                                            <Link
                                                 href={auth.user.role === 'admin' ? route('admin.dashboard') : route('dashboard')}
                                                 onClick={() => setMobileMenuOpen(false)}
                                                 className="text-[10px] text-orange-400 hover:underline block truncate"
@@ -626,7 +626,7 @@ export default function Header() {
                 </div>
             )}
 
-            {/* 5. STARTECH MOBILE BOTTOM DOCK (Sticky on phones & tablets) */}
+            {/* 5. TECH SHOPPERS MOBILE BOTTOM DOCK (Sticky on phones & tablets) */}
             <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#081621] border-t border-gray-800 lg:hidden shadow-2xl px-2 py-1.5 flex items-center justify-around text-[10px] text-gray-300 select-none print:hidden">
                 <Link
                     href="/"

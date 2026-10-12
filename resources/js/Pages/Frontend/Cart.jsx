@@ -227,7 +227,7 @@ export default function Cart({ cartItems, cart = [], subtotal = 0, discount = 0,
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 sm:p-6 space-y-4 sticky top-20">
                             <h3 className="text-base font-bold text-gray-900 border-b pb-3">Order Summary</h3>
-                            
+
                             <div className="space-y-2 text-xs text-gray-600">
                                 <div className="flex items-center justify-between">
                                     <span>Subtotal</span>

@@ -605,7 +605,7 @@ export default function Index({ settings = {} }) {
                                         type="email"
                                         value={data.email}
                                         onChange={(e) => setData('email', e.target.value)}
-                                        placeholder="info@startech.com.bd"
+                                        placeholder="info@techshoppers.com"
                                         className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#EF4A23]/30 focus:border-[#EF4A23]"
                                     />
                                     {errors.email && <p className="text-[11px] text-red-500 mt-1">{errors.email}</p>}
@@ -679,7 +679,7 @@ export default function Index({ settings = {} }) {
                                             type="url"
                                             value={data.youtube_url}
                                             onChange={(e) => setData('youtube_url', e.target.value)}
-                                            placeholder="https://youtube.com/@startechbd"
+                                            placeholder="https://youtube.com/@techshoppers"
                                             className="w-full text-xs px-3.5 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#EF4A23]"
                                         />
                                     </div>
@@ -695,7 +695,7 @@ export default function Index({ settings = {} }) {
                                             type="url"
                                             value={data.instagram_url}
                                             onChange={(e) => setData('instagram_url', e.target.value)}
-                                            placeholder="https://instagram.com/startech.bd"
+                                            placeholder="https://instagram.com/techshoppers"
                                             className="w-full text-xs px-3.5 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#EF4A23]"
                                         />
                                     </div>
@@ -711,7 +711,7 @@ export default function Index({ settings = {} }) {
                                             type="url"
                                             value={data.twitter_url}
                                             onChange={(e) => setData('twitter_url', e.target.value)}
-                                            placeholder="https://x.com/startech_bd"
+                                            placeholder="https://x.com/techshoppers"
                                             className="w-full text-xs px-3.5 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#EF4A23]"
                                         />
                                     </div>

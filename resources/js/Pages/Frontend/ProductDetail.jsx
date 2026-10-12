@@ -3,15 +3,15 @@ import { Link, router, usePage } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 import ProductCard from '@/Components/Frontend/ProductCard';
 import EmiModal from '@/Components/Frontend/EmiModal';
-import { 
-    ChevronRight, 
-    ShoppingCart, 
-    Zap, 
-    ShieldCheck, 
-    Truck, 
-    RotateCcw, 
-    Star, 
-    Plus, 
+import {
+    ChevronRight,
+    ShoppingCart,
+    Zap,
+    ShieldCheck,
+    Truck,
+    RotateCcw,
+    Star,
+    Plus,
     Minus,
     Check,
     MessageSquare,
@@ -125,14 +125,14 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
     };
 
     return (
-        <FrontendLayout 
-            title={seo.title} 
+        <FrontendLayout
+            title={seo.title}
             description={seo.description}
             image={product.thumbnail}
         >
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-500 mb-4 sm:mb-6 overflow-x-auto whitespace-nowrap pb-1">
-                <Link href="/" className="hover:text-[#EF4A23] shrink-0">Home</Link>
+                <Link href={route('home')} className="hover:text-[#EF4A23] shrink-0">Home</Link>
                 <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                 {product.category && (
                     <>
@@ -175,11 +175,10 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
                                         Product ID: <strong className="text-gray-900">{product.sku}</strong>
                                     </span>
                                 )}
-                                <span className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md font-semibold text-[11px] sm:text-xs ${
-                                    product.stock_status === 'in_stock' 
-                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                                <span className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md font-semibold text-[11px] sm:text-xs ${product.stock_status === 'in_stock'
+                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                                         : 'bg-amber-50 text-amber-700 border border-amber-200'
-                                }`}>
+                                    }`}>
                                     Status: {product.stock_status === 'in_stock' ? 'In Stock' : 'Upcoming'}
                                 </span>
                             </div>
@@ -370,33 +369,30 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
                     <button
                         type="button"
                         onClick={() => setActiveTab('specs')}
-                        className={`pb-2 border-b-2 transition shrink-0 ${
-                            activeTab === 'specs'
+                        className={`pb-2 border-b-2 transition shrink-0 ${activeTab === 'specs'
                                 ? 'border-[#EF4A23] text-[#EF4A23]'
                                 : 'border-transparent text-gray-500 hover:text-gray-900'
-                        }`}
+                            }`}
                     >
                         Specification
                     </button>
                     <button
                         type="button"
                         onClick={() => setActiveTab('description')}
-                        className={`pb-2 border-b-2 transition shrink-0 ${
-                            activeTab === 'description'
+                        className={`pb-2 border-b-2 transition shrink-0 ${activeTab === 'description'
                                 ? 'border-[#EF4A23] text-[#EF4A23]'
                                 : 'border-transparent text-gray-500 hover:text-gray-900'
-                        }`}
+                            }`}
                     >
                         Description
                     </button>
                     <button
                         type="button"
                         onClick={() => setActiveTab('reviews')}
-                        className={`pb-2 border-b-2 transition flex items-center gap-1.5 shrink-0 ${
-                            activeTab === 'reviews'
+                        className={`pb-2 border-b-2 transition flex items-center gap-1.5 shrink-0 ${activeTab === 'reviews'
                                 ? 'border-[#EF4A23] text-[#EF4A23]'
                                 : 'border-transparent text-gray-500 hover:text-gray-900'
-                        }`}
+                            }`}
                     >
                         <span>Questions & Reviews</span>
                         <span className="bg-gray-100 text-gray-600 text-[10px] sm:text-xs px-2 py-0.5 rounded-full">
@@ -411,11 +407,10 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
                         {product.specifications && Object.keys(product.specifications).length > 0 ? (
                             <div className="divide-y divide-gray-100 text-xs border border-gray-200 rounded-xl overflow-hidden">
                                 {Object.entries(product.specifications).map(([key, val], idx) => (
-                                    <div 
-                                        key={idx} 
-                                        className={`grid grid-cols-1 sm:grid-cols-3 p-3 sm:p-3.5 ${
-                                            idx % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'
-                                        }`}
+                                    <div
+                                        key={idx}
+                                        className={`grid grid-cols-1 sm:grid-cols-3 p-3 sm:p-3.5 ${idx % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'
+                                            }`}
                                     >
                                         <span className="font-bold text-gray-700">{key}</span>
                                         <span className="sm:col-span-2 text-gray-600 mt-1 sm:mt-0 leading-relaxed">{val}</span>
@@ -692,10 +687,10 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
             )}
 
             {/* EMI Calculator Modal */}
-            <EmiModal 
-                isOpen={showEmiModal} 
-                onClose={() => setShowEmiModal(false)} 
-                product={product} 
+            <EmiModal
+                isOpen={showEmiModal}
+                onClose={() => setShowEmiModal(false)}
+                product={product}
             />
         </FrontendLayout>
     );

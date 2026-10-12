@@ -418,7 +418,7 @@ export default function PcBuilder({ components = [], seo = {} }) {
 
             {/* Print Quotation Layout (Appears ONLY during print / invoice mode) */}
             <div className="hidden print:block p-8 bg-white text-black font-sans">
-                {/* Printable StarTech Header */}
+                {/* Printable Tech Shoppers Header */}
                 <div className="border-b-2 border-black pb-4 mb-6 flex justify-between items-start">
                     <div>
                         {settings?.site_logo ? (

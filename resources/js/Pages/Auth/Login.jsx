@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { 
-    Mail, 
-    Lock, 
-    Eye, 
-    EyeOff, 
-    ArrowRight, 
-    ShieldCheck, 
-    ShoppingBag, 
-    Cpu, 
-    Clock, 
-    MessageSquare, 
-    Sparkles, 
+import {
+    Mail,
+    Lock,
+    Eye,
+    EyeOff,
+    ArrowRight,
+    ShieldCheck,
+    ShoppingBag,
+    Cpu,
+    Clock,
+    MessageSquare,
+    Sparkles,
     CheckCircle2,
     Shield
 } from 'lucide-react';
@@ -48,19 +48,19 @@ export default function Login({ status, canResetPassword }) {
             {/* Top Minimal Bar */}
             <header className="bg-white border-b border-gray-200 py-3.5 px-4 sm:px-8">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 group">
+                    <Link href={route('home')} className="flex items-center gap-2 group">
                         {settings?.site_logo ? (
-                            <img 
-                                src={settings.site_logo} 
-                                alt={settings?.site_name || 'Logo'} 
-                                className="max-h-8 max-w-[150px] object-contain" 
+                            <img
+                                src={settings.site_logo}
+                                alt={settings?.site_name || 'Logo'}
+                                className="max-h-8 max-w-[150px] object-contain"
                             />
                         ) : (
                             <>
                                 <span className="text-2xl font-black tracking-tight text-[#081621] group-hover:opacity-90">
                                     {settings?.site_name ? settings.site_name.split(' ')[0] : 'TECH'}
                                 </span>
-                                <span 
+                                <span
                                     className="text-2xl font-black tracking-tight"
                                     style={{ color: settings?.primary_color || '#EF4A23' }}
                                 >
@@ -71,8 +71,8 @@ export default function Login({ status, canResetPassword }) {
                     </Link>
                     <div className="flex items-center gap-3 text-xs">
                         <span className="text-gray-500 hidden sm:inline">New to {settings?.site_name || 'Tech Shoppers'}?</span>
-                        <Link 
-                            href={route('register')} 
+                        <Link
+                            href={route('register')}
                             className="font-bold hover:underline"
                             style={{ color: settings?.primary_color || '#EF4A23' }}
                         >
@@ -85,7 +85,7 @@ export default function Login({ status, canResetPassword }) {
             {/* Main Content Area */}
             <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-10">
                 <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-gray-200/90 overflow-hidden grid grid-cols-1 md:grid-cols-12">
-                    
+
                     {/* Left: Tech Shoppers Brand Perks Showcase */}
                     <div className="hidden md:flex md:col-span-5 bg-gradient-to-br from-[#081621] via-[#112538] to-[#081621] p-8 text-white flex-col justify-between relative overflow-hidden">
                         {/* Decorative background circle */}
@@ -205,11 +205,10 @@ export default function Login({ status, canResetPassword }) {
                                             required
                                             onChange={(e) => setData('email', e.target.value)}
                                             placeholder="e.g. yourname@example.com"
-                                            className={`w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border transition ${
-                                                errors.email 
-                                                    ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/20' 
+                                            className={`w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border transition ${errors.email
+                                                    ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/20'
                                                     : 'border-gray-300 focus:border-[#EF4A23] focus:ring-orange-100 bg-white'
-                                            } focus:outline-none focus:ring-4`}
+                                                } focus:outline-none focus:ring-4`}
                                         />
                                     </div>
                                     {errors.email && (
@@ -245,11 +244,10 @@ export default function Login({ status, canResetPassword }) {
                                             required
                                             onChange={(e) => setData('password', e.target.value)}
                                             placeholder="••••••••"
-                                            className={`w-full pl-10 pr-10 py-2.5 text-xs rounded-xl border transition ${
-                                                errors.password 
-                                                    ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/20' 
+                                            className={`w-full pl-10 pr-10 py-2.5 text-xs rounded-xl border transition ${errors.password
+                                                    ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/20'
                                                     : 'border-gray-300 focus:border-[#EF4A23] focus:ring-orange-100 bg-white'
-                                            } focus:outline-none focus:ring-4`}
+                                                } focus:outline-none focus:ring-4`}
                                         />
                                         <button
                                             type="button"
@@ -294,8 +292,8 @@ export default function Login({ status, canResetPassword }) {
                             {/* Don't have an account */}
                             <div className="mt-6 text-center text-xs text-gray-500">
                                 Don't have a {settings?.site_name || 'Tech Shoppers'} account?{' '}
-                                <Link 
-                                    href={route('register')} 
+                                <Link
+                                    href={route('register')}
                                     className="font-bold text-[#EF4A23] hover:underline"
                                 >
                                     Register Now
@@ -306,7 +304,7 @@ export default function Login({ status, canResetPassword }) {
                         {/* Admin Portal Gateway footer */}
                         <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
                             <span>Internal Staff Member?</span>
-                            <Link 
+                            <Link
                                 href={route('admin.login')}
                                 className="font-bold text-gray-700 hover:text-[#EF4A23] transition flex items-center gap-1"
                             >

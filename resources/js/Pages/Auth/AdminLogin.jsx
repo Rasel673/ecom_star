@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { 
-    Shield, 
-    Lock, 
-    Mail, 
-    Eye, 
-    EyeOff, 
-    ArrowRight, 
-    Terminal, 
-    Server, 
-    CheckCircle2, 
+import {
+    Shield,
+    Lock,
+    Mail,
+    Eye,
+    EyeOff,
+    ArrowRight,
+    Terminal,
+    Server,
+    CheckCircle2,
     AlertCircle,
     Store,
     KeyRound
@@ -34,7 +34,7 @@ export default function AdminLogin({ status }) {
 
     const fillDemoAdmin = () => {
         setData({
-            email: 'admin@startech.com.bd',
+            email: 'admin@techshoppers.com',
             password: 'password123',
             remember: true,
         });
@@ -45,7 +45,7 @@ export default function AdminLogin({ status }) {
             <Head title={`Admin Security Gateway - ${settings?.site_name || 'Tech Shoppers'}`} />
 
             {/* Cyber Grid Background overlay */}
-            <div 
+            <div
                 className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{
                     backgroundImage: `linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)`,
@@ -60,19 +60,19 @@ export default function AdminLogin({ status }) {
             <header className="relative z-10 border-b border-gray-800/80 bg-[#08121E]/60 backdrop-blur-md px-6 py-4">
                 <div className="max-w-6xl mx-auto flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <Link href="/" className="flex items-center gap-2">
+                        <Link href={route('home')} className="flex items-center gap-2">
                             {settings?.site_logo ? (
-                                <img 
-                                    src={settings.site_logo} 
-                                    alt={settings?.site_name || 'Logo'} 
-                                    className="max-h-7 max-w-[120px] object-contain" 
+                                <img
+                                    src={settings.site_logo}
+                                    alt={settings?.site_name || 'Logo'}
+                                    className="max-h-7 max-w-[120px] object-contain"
                                 />
                             ) : (
                                 <>
                                     <span className="text-xl font-black tracking-tight text-white">
                                         {settings?.site_name ? settings.site_name.split(' ')[0] : 'TECH'}
                                     </span>
-                                    <span 
+                                    <span
                                         className="text-xl font-black tracking-tight"
                                         style={{ color: settings?.primary_color || '#EF4A23' }}
                                     >
@@ -89,7 +89,7 @@ export default function AdminLogin({ status }) {
                     </div>
 
                     <Link
-                        href="/"
+                        href={route('home')}
                         className="text-xs text-gray-400 hover:text-white transition flex items-center gap-1.5 font-medium"
                     >
                         <Store className="w-3.5 h-3.5" />
@@ -123,7 +123,7 @@ export default function AdminLogin({ status }) {
                             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span className="text-gray-300 font-medium">Demo Admin:</span>
                             <code className="bg-gray-800 text-orange-300 px-1.5 py-0.5 rounded text-[11px] font-mono">
-                                admin@startech.com.bd
+                                admin@techshoppers.com
                             </code>
                         </div>
                         <button
@@ -162,12 +162,11 @@ export default function AdminLogin({ status }) {
                                     autoComplete="username"
                                     required
                                     onChange={(e) => setData('email', e.target.value)}
-                                    placeholder="admin@startech.com.bd"
-                                    className={`w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border bg-[#060D17] text-white transition ${
-                                        errors.email 
-                                            ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-900/40' 
+                                    placeholder="admin@techshoppers.com"
+                                    className={`w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border bg-[#060D17] text-white transition ${errors.email
+                                            ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-900/40'
                                             : 'border-gray-700/80 focus:border-[#EF4A23] focus:ring-orange-950/50'
-                                    } focus:outline-none focus:ring-4`}
+                                        } focus:outline-none focus:ring-4`}
                                 />
                             </div>
                             {errors.email && (
@@ -196,11 +195,10 @@ export default function AdminLogin({ status }) {
                                     required
                                     onChange={(e) => setData('password', e.target.value)}
                                     placeholder="••••••••••••"
-                                    className={`w-full pl-10 pr-10 py-2.5 text-xs rounded-xl border bg-[#060D17] text-white transition ${
-                                        errors.password 
-                                            ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-900/40' 
+                                    className={`w-full pl-10 pr-10 py-2.5 text-xs rounded-xl border bg-[#060D17] text-white transition ${errors.password
+                                            ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-900/40'
                                             : 'border-gray-700/80 focus:border-[#EF4A23] focus:ring-orange-950/50'
-                                    } focus:outline-none focus:ring-4`}
+                                        } focus:outline-none focus:ring-4`}
                                 />
                                 <button
                                     type="button"
