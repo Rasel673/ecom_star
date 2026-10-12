@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 import ProductCard from '@/Components/Frontend/ProductCard';
+import EmiModal from '@/Components/Frontend/EmiModal';
 import { 
     ChevronRight, 
     ShoppingCart, 
@@ -21,7 +22,9 @@ import {
     Phone,
     MapPin,
     Mail,
-    User
+    User,
+    Calculator,
+    CreditCard
 } from 'lucide-react';
 
 const WhatsAppIcon = ({ className = "w-4 h-4" }) => (
@@ -36,6 +39,7 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
     const [activeTab, setActiveTab] = useState('specs'); // 'specs', 'description', 'reviews'
     const [wishlistLoading, setWishlistLoading] = useState(false);
     const [showPreOrderModal, setShowPreOrderModal] = useState(false);
+    const [showEmiModal, setShowEmiModal] = useState(false);
     const [preOrderForm, setPreOrderForm] = useState({
         customer_name: auth?.user?.name || '',
         customer_phone: auth?.user?.phone || '',
@@ -217,6 +221,31 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
                                 <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1">
                                     Special Price for Online Order & Cash on Delivery. Card / EMI prices may vary.
                                 </p>
+
+                                {/* EMI teaser banner */}
+                                {price >= 5000 && (
+                                    <div className="mt-3 pt-3 border-t border-orange-200/60 flex flex-wrap items-center justify-between gap-2">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-7 h-7 rounded-lg bg-orange-100 text-[#EF4A23] flex items-center justify-center shrink-0">
+                                                <CreditCard className="w-3.5 h-3.5" />
+                                            </div>
+                                            <div>
+                                                <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">0% EMI Available</span>
+                                                <span className="text-xs sm:text-sm font-extrabold text-gray-900">
+                                                    Starts from <strong className="text-[#EF4A23]">৳{Math.round(price / 36).toLocaleString()}</strong><span className="text-[11px] font-normal text-gray-500"> /mo</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowEmiModal(true)}
+                                            className="px-3 py-1.5 text-xs font-bold text-[#EF4A23] hover:text-white bg-white hover:bg-[#EF4A23] border border-[#EF4A23] rounded-lg transition shadow-xs flex items-center gap-1.5"
+                                        >
+                                            <Calculator className="w-3.5 h-3.5" />
+                                            <span>View EMI Plans</span>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -661,6 +690,13 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
                     </div>
                 </div>
             )}
+
+            {/* EMI Calculator Modal */}
+            <EmiModal 
+                isOpen={showEmiModal} 
+                onClose={() => setShowEmiModal(false)} 
+                product={product} 
+            />
         </FrontendLayout>
     );
 }

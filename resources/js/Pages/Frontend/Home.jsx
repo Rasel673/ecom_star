@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 import HeroSlider from '@/Components/Frontend/HeroSlider';
 import ProductCard from '@/Components/Frontend/ProductCard';
+import QuickServicesBar from '@/Components/Frontend/QuickServicesBar';
 import { 
     Monitor, 
     Laptop, 
@@ -72,6 +73,9 @@ export default function Home({
                     ))}
                 </div>
             </div>
+
+            {/* Quick Services & Daily Announcement Bar */}
+            <QuickServicesBar settings={settings} />
 
             {/* 2. Featured Categories */}
             <div className="mb-12">

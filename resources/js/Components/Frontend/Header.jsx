@@ -142,11 +142,11 @@ export default function Header() {
                             </span>
                         </div>
                         <div className="flex items-center space-x-2 sm:space-x-4 text-gray-300 text-[11px] sm:text-xs">
-                            <Link href="/pc-builder" className="hover:text-orange-400 transition hidden sm:inline">Online Delivery</Link>
+                            <Link href="/page/order-tracking" className="hover:text-orange-400 transition hidden sm:inline">Order Tracking</Link>
                             <span className="text-gray-600 hidden sm:inline">|</span>
-                            <Link href="/" className="hover:text-orange-400 transition">EMI Policy</Link>
+                            <Link href="/emi-calculation" className="hover:text-orange-400 transition font-medium">0% EMI Calculator</Link>
                             <span className="text-gray-600">|</span>
-                            <Link href="/" className="hover:text-orange-400 transition">Warranty</Link>
+                            <Link href="/page/service-complain" className="hover:text-orange-400 transition">Warranty & RMA</Link>
                         </div>
                     </div>
                 </div>
@@ -584,12 +584,20 @@ export default function Header() {
                                 <span>Custom PC Builder</span>
                             </Link>
                             <Link
-                                href="/"
+                                href="/emi-calculation"
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="flex items-center gap-2.5 px-4 py-2.5 font-semibold text-gray-300 hover:bg-[#112233]"
+                            >
+                                <Percent className="w-4 h-4 text-[#EF4A23]" />
+                                <span>0% EMI Calculator</span>
+                            </Link>
+                            <Link
+                                href="/page/order-tracking"
                                 onClick={() => setMobileMenuOpen(false)}
                                 className="flex items-center gap-2.5 px-4 py-2.5 font-semibold text-gray-300 hover:bg-[#112233]"
                             >
                                 <Gift className="w-4 h-4 text-[#EF4A23]" />
-                                <span>Special Offers</span>
+                                <span>Order Tracking</span>
                             </Link>
                             <a
                                 href={`tel:${settings?.hotline || '16793'}`}
