@@ -124,11 +124,44 @@ export default function ProductDetail({ product, relatedProducts = [], seo = {} 
         });
     };
 
+    const currentPrice = product.special_price || product.regular_price;
+    const isAvailable = product.stock_status === 'in_stock' && (product.quantity > 0 || product.quantity === null);
+
+    const productSchema = settings?.seo_schema_product_enabled !== '0' ? {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": product.name,
+        "image": product.thumbnail ? [product.thumbnail] : [],
+        "description": seo.description || (product.description ? product.description.replace(/<[^>]+>/g, '').substring(0, 200) : product.name),
+        "sku": product.sku || product.model || `PROD-${product.id}`,
+        "mpn": product.model || undefined,
+        "brand": product.brand ? {
+            "@type": "Brand",
+            "name": product.brand.name
+        } : undefined,
+        "offers": {
+            "@type": "Offer",
+            "url": typeof window !== 'undefined' ? window.location.href : '',
+            "priceCurrency": "BDT",
+            "price": currentPrice,
+            "availability": isAvailable ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "itemCondition": "https://schema.org/NewCondition"
+        },
+        ...(product.reviews && product.reviews.length > 0 ? {
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": (product.reviews.reduce((acc, r) => acc + (r.rating || 5), 0) / product.reviews.length).toFixed(1),
+                "reviewCount": product.reviews.length
+            }
+        } : {})
+    } : null;
+
     return (
         <FrontendLayout
             title={seo.title}
             description={seo.description}
             image={product.thumbnail}
+            schema={productSchema}
         >
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-500 mb-4 sm:mb-6 overflow-x-auto whitespace-nowrap pb-1">

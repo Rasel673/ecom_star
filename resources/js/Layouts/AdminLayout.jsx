@@ -17,7 +17,8 @@ import {
     MessageSquare,
     Clock,
     FileText,
-    Settings
+    Settings,
+    Globe
 } from 'lucide-react';
 
 export default function AdminLayout({ children, title }) {
@@ -52,6 +53,7 @@ export default function AdminLayout({ children, title }) {
         { label: 'Banners & Sliders', href: route('admin.banners.index'), icon: Image, routeName: 'admin.banners.*' },
         { label: 'Pages & CMS', href: route('admin.pages.index'), icon: FileText, routeName: 'admin.pages.*' },
         { label: 'Site Settings', href: route('admin.settings.index'), icon: Settings, routeName: 'admin.settings.*' },
+        { label: 'SEO Suite', href: route('admin.seo.index'), icon: Globe, routeName: 'admin.seo.*' },
     ];
 
     const siteName = settings?.site_name || 'Tech Shoppers';

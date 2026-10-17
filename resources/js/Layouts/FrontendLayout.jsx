@@ -5,8 +5,17 @@ import Navbar from '@/Components/Frontend/Navbar';
 import Footer from '@/Components/Frontend/Footer';
 import { CheckCircle2, AlertCircle, X } from 'lucide-react';
 
-export default function FrontendLayout({ children, title, description, image }) {
-    const { flash, settings } = usePage().props;
+export default function FrontendLayout({
+    children,
+    title,
+    description,
+    image,
+    keywords,
+    type = 'website',
+    canonical,
+    schema = null,
+}) {
+    const { flash, settings, ziggy } = usePage().props;
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertType, setAlertType] = useState(null);
 
@@ -27,16 +36,113 @@ export default function FrontendLayout({ children, title, description, image }) 
 
     const siteTitle = settings?.site_name || 'Tech Shoppers';
     const siteTagline = settings?.site_tagline || 'Leading Computer & Laptop Shop in Bangladesh';
+    const metaDesc = description || settings?.seo_meta_description || siteTagline;
+    const metaKeywords = keywords || settings?.seo_meta_keywords || '';
+    const shareImage = image || settings?.seo_og_image || settings?.site_logo || '';
+    const currentUrl = canonical || (typeof window !== 'undefined' ? window.location.href : (ziggy?.location || ''));
+
+    // Compute page title cleanly without duplicate suffix
+    let fullTitle = `${siteTitle} | ${siteTagline}`;
+    if (title) {
+        if (title.toLowerCase().includes(siteTitle.toLowerCase())) {
+            fullTitle = title;
+        } else {
+            fullTitle = `${title} | ${siteTitle}`;
+        }
+    } else if (settings?.seo_meta_title) {
+        fullTitle = settings.seo_meta_title;
+    }
+
+    const robotsValue = `${settings?.seo_robots_index || 'index'}, ${settings?.seo_robots_follow || 'follow'}${
+        settings?.seo_robots_advanced ? ', ' + settings.seo_robots_advanced : ''
+    }`;
+
+    // Schema: Organization
+    const sameAsProfiles = [
+        settings?.facebook_url,
+        settings?.youtube_url,
+        settings?.instagram_url,
+        settings?.twitter_url,
+        settings?.linkedin_url,
+    ].filter(Boolean);
+
+    const organizationSchema = settings?.seo_schema_org_enabled !== '0' ? {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": settings?.seo_schema_org_name || siteTitle,
+        "url": settings?.seo_canonical_base || (typeof window !== 'undefined' ? window.location.origin : ''),
+        "logo": settings?.seo_schema_org_logo || settings?.site_logo || shareImage || undefined,
+        "contactPoint": settings?.hotline || settings?.phone ? {
+            "@type": "ContactPoint",
+            "telephone": settings?.hotline || settings?.phone,
+            "contactType": "customer service",
+            "areaServed": "BD"
+        } : undefined,
+        "address": settings?.address ? {
+            "@type": "PostalAddress",
+            "streetAddress": settings?.address,
+            "addressCountry": "BD"
+        } : undefined,
+        "sameAs": sameAsProfiles.length > 0 ? sameAsProfiles : undefined
+    } : null;
+
+    // Schema: Sitelinks SearchBox
+    const searchSchema = settings?.seo_schema_search_enabled !== '0' ? {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": siteTitle,
+        "url": settings?.seo_canonical_base || (typeof window !== 'undefined' ? window.location.origin : ''),
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": `${(settings?.seo_canonical_base || (typeof window !== 'undefined' ? window.location.origin : ''))}/search?q={search_term_string}`,
+            "query-input": "required name=search_term_string"
+        }
+    } : null;
 
     return (
         <div className="min-h-screen flex flex-col bg-[#F2F4F8] text-[#111827] antialiased selection:bg-[#EF4A23] selection:text-white">
             <Head>
-                <title>{title ? `${title} | ${siteTitle}` : `${siteTitle} | ${siteTagline}`}</title>
-                <meta name="description" content={description || siteTagline} />
+                <title>{fullTitle}</title>
+                <meta name="description" content={metaDesc} />
+                {metaKeywords && <meta name="keywords" content={metaKeywords} />}
+                {settings?.seo_author && <meta name="author" content={settings.seo_author} />}
+                <meta name="robots" content={robotsValue} />
+                {currentUrl && <link rel="canonical" href={currentUrl} />}
                 {settings?.site_favicon && <link rel="icon" href={settings.site_favicon} />}
-                {image && <meta property="og:image" content={image} />}
+
+                {/* OpenGraph / Facebook */}
+                <meta property="og:title" content={title || settings?.seo_og_title || fullTitle} />
+                <meta property="og:description" content={metaDesc} />
+                {shareImage && <meta property="og:image" content={shareImage} />}
+                {currentUrl && <meta property="og:url" content={currentUrl} />}
                 <meta property="og:site_name" content={siteTitle} />
-                <meta property="og:type" content="website" />
+                <meta property="og:type" content={type || settings?.seo_og_type || 'website'} />
+
+                {/* Twitter Cards */}
+                <meta name="twitter:card" content={settings?.seo_twitter_card || 'summary_large_image'} />
+                {settings?.seo_twitter_site && <meta name="twitter:site" content={settings.seo_twitter_site} />}
+                {settings?.seo_twitter_creator && <meta name="twitter:creator" content={settings.seo_twitter_creator} />}
+                <meta name="twitter:title" content={title || fullTitle} />
+                <meta name="twitter:description" content={metaDesc} />
+                {shareImage && <meta name="twitter:image" content={shareImage} />}
+                {settings?.seo_fb_app_id && <meta property="fb:app_id" content={settings.seo_fb_app_id} />}
+
+                {/* Structured Data (JSON-LD) */}
+                {organizationSchema && (
+                    <script type="application/ld+json">
+                        {JSON.stringify(organizationSchema)}
+                    </script>
+                )}
+                {searchSchema && (
+                    <script type="application/ld+json">
+                        {JSON.stringify(searchSchema)}
+                    </script>
+                )}
+                {schema && (
+                    <script type="application/ld+json">
+                        {JSON.stringify(schema)}
+                    </script>
+                )}
             </Head>
 
             {/* Notification Toast */}

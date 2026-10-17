@@ -18,6 +18,8 @@ use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SeoController;
+use App\Http\Controllers\Frontend\SitemapController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +64,7 @@ Route::post('/page/inquiry', [PageController::class, 'submitInquiry'])->name('pa
 Route::get('/order-tracking', fn() => redirect()->route('page.show', 'order-tracking'));
 Route::get('/emi-calculation', fn() => redirect()->route('page.show', 'emi-calculation'));
 Route::get('/contact-us', fn() => redirect()->route('page.show', 'contact-us'));
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // Customer Auth & Features
 Route::middleware(['auth'])->group(function () {
@@ -121,6 +124,22 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Site Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // SEO Control Panel
+    Route::get('/seo', [SeoController::class, 'index'])->name('seo.index');
+    Route::post('/seo/general', [SeoController::class, 'updateGeneral'])->name('seo.general');
+    Route::post('/seo/social', [SeoController::class, 'updateSocial'])->name('seo.social');
+    Route::post('/seo/webmaster', [SeoController::class, 'updateWebmaster'])->name('seo.webmaster');
+    Route::post('/seo/analytics', [SeoController::class, 'updateAnalytics'])->name('seo.analytics');
+    Route::post('/seo/sitemap', [SeoController::class, 'updateSitemap'])->name('seo.sitemap');
+    Route::post('/seo/robots', [SeoController::class, 'updateRobots'])->name('seo.robots');
+    Route::post('/seo/schema', [SeoController::class, 'updateSchema'])->name('seo.schema');
+
+    // SEO 301/302 Redirections
+    Route::post('/seo/redirects', [SeoController::class, 'storeRedirect'])->name('seo.redirects.store');
+    Route::put('/seo/redirects/{redirect}', [SeoController::class, 'updateRedirect'])->name('seo.redirects.update');
+    Route::delete('/seo/redirects/{redirect}', [SeoController::class, 'destroyRedirect'])->name('seo.redirects.destroy');
+    Route::patch('/seo/redirects/{redirect}/toggle', [SeoController::class, 'toggleRedirect'])->name('seo.redirects.toggle');
 });
 
 require __DIR__.'/auth.php';
