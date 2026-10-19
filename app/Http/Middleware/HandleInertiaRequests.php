@@ -43,6 +43,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
+                'import_results' => fn () => $request->session()->get('import_results'),
             ],
             'settings' => fn () => Setting::pluck('value', 'key')->toArray(),
             'ziggy' => fn () => [

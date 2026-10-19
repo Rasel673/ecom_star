@@ -90,6 +90,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Categories CRUD
     Route::resource('categories', AdminCategoryController::class);
     
+    // Products Bulk Import & Export
+    Route::get('/products/export', [AdminProductController::class, 'export'])->name('products.export');
+    Route::get('/products/sample-template', [AdminProductController::class, 'downloadTemplate'])->name('products.sample-template');
+    Route::post('/products/import', [AdminProductController::class, 'import'])->name('products.import');
+
     // Products CRUD
     Route::resource('products', AdminProductController::class);
     

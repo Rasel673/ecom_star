@@ -6,13 +6,79 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Services\ProductImportExportService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProductController extends Controller
 {
+    /**
+     * Export products to Excel (.xlsx) or CSV.
+     */
+    public function export(Request $request, ProductImportExportService $service): BinaryFileResponse
+    {
+        $format = $request->query('format', 'xlsx');
+        $filters = $request->only(['search', 'category_id', 'brand_id']);
+
+        return $service->export($format, $filters);
+    }
+
+    /**
+     * Download sample import template (.xlsx or .csv).
+     */
+    public function downloadTemplate(Request $request, ProductImportExportService $service): BinaryFileResponse
+    {
+        $format = $request->query('format', 'xlsx');
+
+        return $service->downloadSampleTemplate($format);
+    }
+
+    /**
+     * Bulk Import products from spreadsheet file.
+     */
+    public function import(Request $request, ProductImportExportService $service): RedirectResponse
+    {
+        $request->validate([
+            'file' => [
+                'required',
+                'file',
+                'max:25600', // up to 25MB
+                function ($attribute, $value, $fail) {
+                    $ext = strtolower($value->getClientOriginalExtension());
+                    if (!in_array($ext, ['xlsx', 'csv', 'txt'])) {
+                        $fail('The uploaded file must be an Excel spreadsheet (.xlsx) or CSV (.csv).');
+                    }
+                },
+            ],
+            'update_existing' => 'nullable|boolean',
+        ]);
+
+        $updateExisting = $request->boolean('update_existing', true);
+        $file = $request->file('file');
+
+        try {
+            $results = $service->import($file, $updateExisting);
+
+            $msg = sprintf(
+                'Bulk Import Complete: %d added, %d updated, %d skipped out of %d rows.',
+                $results['imported'],
+                $results['updated'],
+                $results['skipped'],
+                $results['total_rows']
+            );
+
+            return redirect()->route('admin.products.index')
+                ->with('success', $msg)
+                ->with('import_results', $results);
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.products.index')
+                ->with('error', 'Import failed: ' . $e->getMessage());
+        }
+    }
     public function index(Request $request): Response
     {
         $query = Product::with(['category', 'brand'])->latest();
